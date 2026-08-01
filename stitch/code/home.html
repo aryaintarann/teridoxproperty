@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Teridox Property - Find Your Perfect Kost</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&amp;family=Inter:wght@400;500;600&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&amp;family=Montserrat:wght@100..900&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-tertiary-container": "#58ccc6",
+                    "on-tertiary-fixed-variant": "#00504d",
+                    "primary": "#00355f",
+                    "surface-bright": "#f7fafc",
+                    "on-secondary-container": "#596376",
+                    "primary-fixed": "#d2e4ff",
+                    "surface-container-low": "#f1f4f6",
+                    "outline-variant": "#c2c7d1",
+                    "surface-tint": "#2d6197",
+                    "on-error-container": "#93000a",
+                    "tertiary": "#003b38",
+                    "surface-container-high": "#e5e9eb",
+                    "secondary": "#555f71",
+                    "on-primary-container": "#8ebdf9",
+                    "secondary-container": "#d6e0f6",
+                    "tertiary-fixed": "#84f5ee",
+                    "surface-dim": "#d7dadc",
+                    "on-tertiary-fixed": "#00201e",
+                    "primary-fixed-dim": "#a0c9ff",
+                    "on-secondary": "#ffffff",
+                    "inverse-primary": "#a0c9ff",
+                    "surface-container": "#ebeef0",
+                    "secondary-fixed": "#d9e3f9",
+                    "inverse-on-surface": "#eef1f3",
+                    "outline": "#727780",
+                    "on-primary-fixed": "#001c37",
+                    "on-secondary-fixed": "#121c2c",
+                    "surface-variant": "#e0e3e5",
+                    "error": "#ba1a1a",
+                    "tertiary-fixed-dim": "#66d8d2",
+                    "on-surface": "#181c1e",
+                    "secondary-fixed-dim": "#bdc7dc",
+                    "background": "#f7fafc",
+                    "on-tertiary": "#ffffff",
+                    "surface-container-highest": "#e0e3e5",
+                    "on-primary": "#ffffff",
+                    "on-primary-fixed-variant": "#07497d",
+                    "surface": "#f7fafc",
+                    "inverse-surface": "#2d3133",
+                    "error-container": "#ffdad6",
+                    "on-background": "#181c1e",
+                    "primary-container": "#0f4c81",
+                    "on-surface-variant": "#42474f",
+                    "on-secondary-fixed-variant": "#3d4759",
+                    "on-error": "#ffffff",
+                    "tertiary-container": "#005451",
+                    "surface-container-lowest": "#ffffff"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.125rem",
+                    "lg": "0.25rem",
+                    "xl": "0.5rem",
+                    "full": "0.75rem"
+            },
+            "spacing": {
+                    "margin-desktop": "48px",
+                    "base": "4px",
+                    "md": "24px",
+                    "xl": "64px",
+                    "sm": "16px",
+                    "lg": "40px",
+                    "xs": "8px",
+                    "margin-mobile": "16px",
+                    "gutter": "24px"
+            },
+            "fontFamily": {
+                    "headline-md": ["Montserrat"],
+                    "display-lg": ["Montserrat"],
+                    "body-lg": ["Inter"],
+                    "body-md": ["Inter"],
+                    "body-sm": ["Inter"],
+                    "label-bold": ["Inter"],
+                    "headline-sm": ["Montserrat"],
+                    "display-lg-mobile": ["Montserrat"]
+            },
+            "fontSize": {
+                    "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                    "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                    "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "body-sm": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                    "label-bold": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                    "headline-sm": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                    "display-lg-mobile": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "700"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            vertical-align: middle;
+        }
+        .zebra-table tr:nth-child(even) {
+            background-color: #F7FAFC;
+        }
+        .glass-effect {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(8px);
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background font-body-md selection:bg-primary-fixed selection:text-on-primary-fixed">
+<!-- TopNavBar -->
+<header class="sticky top-0 z-50 flex justify-between items-center w-full px-margin-desktop py-4 max-w-7xl mx-auto bg-surface-bright dark:bg-inverse-surface shadow-sm">
+<div class="flex items-center gap-xl">
+<h1 class="text-headline-md font-headline-md font-bold text-primary dark:text-primary-fixed-dim">Teridox Property</h1>
+<nav class="hidden md:flex items-center gap-lg">
+<a class="text-headline-sm font-headline-sm text-primary dark:text-primary-fixed-dim border-b-2 border-primary dark:border-primary-fixed-dim pb-1 font-bold" href="#">Home</a>
+<a class="font-body-md text-body-md text-on-secondary-container dark:text-on-secondary-fixed-variant hover:text-primary dark:hover:text-primary-fixed-dim transition-colors duration-200" href="#">About Us</a>
+<a class="font-body-md text-body-md text-on-secondary-container dark:text-on-secondary-fixed-variant hover:text-primary dark:hover:text-primary-fixed-dim transition-colors duration-200" href="#">Listing Unit</a>
+<a class="font-body-md text-body-md text-on-secondary-container dark:text-on-secondary-fixed-variant hover:text-primary dark:hover:text-primary-fixed-dim transition-colors duration-200" href="#">FAQ</a>
+<a class="font-body-md text-body-md text-on-secondary-container dark:text-on-secondary-fixed-variant hover:text-primary dark:hover:text-primary-fixed-dim transition-colors duration-200" href="#">Contact Us</a>
+</nav>
+</div>
+<button class="bg-primary-container text-on-primary-container px-sm py-xs rounded-xl font-label-bold text-label-bold active:opacity-80 transition-all">Sign In</button>
+</header>
+<main>
+<!-- Hero Section -->
+<section class="relative min-h-[819px] flex items-center justify-center overflow-hidden py-xl px-margin-mobile md:px-margin-desktop">
+<div class="absolute inset-0 z-0">
+<div class="w-full h-full bg-cover bg-center brightness-[0.85]" data-alt="A professional, high-end photograph of a modern, minimalist residential building exterior at dusk. The architecture features clean lines, glass balconies, and warm interior lighting. The overall mood is sophisticated and reliable, using a palette of corporate blues and soft whites. The lighting is crisp, highlighting the high-quality materials and architectural design." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDwuxVTdQU1vXS7XVD_GxlgwSQfsUyxntkKExszlXxVVMk6TtgcG3foGT3LqmTIRT78_GzI3Nm4zMtdBbdqzJHb66BCo_tvz3LYjuHGqNQWOl3gpfonPyF8LDhWIEyUUzY1Yk9DOh07inrO1kE9ktupId2jxa1uE_PlPyNndGDb69zI0u65G4af-34nRK5tZZRVUeo3rKOBSZAqAwbDYNlYdxbkqE9QLsY6ThhP-Rh3jg6dLslE1Gcp7A')"></div>
+</div>
+<div class="relative z-10 max-w-4xl w-full text-center space-y-lg">
+<h2 class="font-display-lg text-display-lg-mobile md:text-display-lg text-white drop-shadow-lg">
+                    Discover Your Perfect <span class="text-primary-fixed">Kost</span> Experience
+                </h2>
+<p class="text-white text-body-lg max-w-2xl mx-auto drop-shadow-md">
+                    Modern, reliable, and comfortable living spaces curated for professionals and students. Your home away from home starts here.
+                </p>
+<!-- Search Bar -->
+<div class="bg-surface-container-lowest p-xs md:p-base rounded-full shadow-lg max-w-3xl mx-auto flex flex-col md:flex-row items-center border border-outline-variant">
+<div class="flex-1 flex items-center px-sm py-xs border-b md:border-b-0 md:border-r border-outline-variant w-full">
+<span class="material-symbols-outlined text-primary mr-xs">location_on</span>
+<input class="bg-transparent border-none focus:ring-0 w-full text-body-md placeholder:text-on-surface-variant" placeholder="Where do you want to live?" type="text"/>
+</div>
+<div class="flex-1 flex items-center px-sm py-xs w-full">
+<span class="material-symbols-outlined text-primary mr-xs">payments</span>
+<select class="bg-transparent border-none focus:ring-0 w-full text-body-md text-on-surface-variant cursor-pointer">
+<option value="">Price Range</option>
+<option value="low">Under 2M IDR</option>
+<option value="mid">2M - 5M IDR</option>
+<option value="high">Above 5M IDR</option>
+</select>
+</div>
+<button class="w-full md:w-auto bg-primary text-white px-xl py-xs rounded-full font-label-bold text-label-bold hover:bg-primary-container transition-colors m-base">
+                        Search
+                    </button>
+</div>
+</div>
+</section>
+<!-- Featured Listings -->
+<section class="py-xl px-margin-mobile md:px-margin-desktop max-w-7xl mx-auto">
+<div class="flex justify-between items-end mb-lg">
+<div>
+<h3 class="font-headline-md text-headline-md text-primary">Premium Kost Units</h3>
+<p class="text-on-surface-variant font-body-md">Hand-picked luxury for your lifestyle.</p>
+</div>
+<a class="text-primary font-label-bold flex items-center hover:underline" href="#">
+                    View All <span class="material-symbols-outlined ml-xs">arrow_forward</span>
+</a>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-gutter">
+<!-- Card 1 -->
+<div class="group bg-surface-container-lowest rounded-xl border border-outline-variant overflow-hidden shadow-sm hover:shadow-md transition-shadow">
+<div class="relative h-64 overflow-hidden">
+<div class="w-full h-full bg-cover bg-center group-hover:scale-105 transition-transform duration-500" data-alt="A bright and airy modern kost room with a queen-sized bed, high-quality linen, and minimalist decor. Large windows let in soft daylight. The room features a compact workspace and sleek storage solutions. The design is clean and architectural, emphasizing trust and comfort with a palette of whites and soft grays." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBxKgIY8h01XXPWA95y3sKJOE8ImQCu-l5nG41T0WAjQjswLJB_1zfQ_l3GPtVrbDMb_bDAUz614eGByGDBf0oThNTWvhk918WBNEN84Osl72B4oPvLq0S8k1qC21u7KLFxKp1AxCLroW4oJLwo-SiyZr2B_C7GgCCJzIWXDtCQDjMoBuZo6drlBHmdq1idVUZYJivYIofTXu6GPKrSllbcnTilboPCthoTttaUxF6a95m-FamnEG5QCw')"></div>
+<div class="absolute top-sm left-sm bg-tertiary-container text-on-tertiary-container px-sm py-1 rounded-full text-label-bold">
+                            Available
+                        </div>
+</div>
+<div class="p-sm space-y-xs">
+<div class="flex justify-between items-start">
+<h4 class="font-headline-sm text-headline-sm text-on-surface">The Zenith Suites</h4>
+<span class="text-primary font-bold text-body-md">2.5M <span class="text-label-bold font-normal text-on-surface-variant">/mo</span></span>
+</div>
+<div class="flex items-center text-on-surface-variant text-body-sm">
+<span class="material-symbols-outlined text-sm mr-xs">location_on</span>
+                            Setiabudi, South Jakarta
+                        </div>
+<div class="flex gap-sm pt-xs border-t border-outline-variant">
+<div class="flex items-center text-on-surface-variant text-label-bold">
+<span class="material-symbols-outlined text-sm mr-xs">wifi</span> WiFi
+                            </div>
+<div class="flex items-center text-on-surface-variant text-label-bold">
+<span class="material-symbols-outlined text-sm mr-xs">ac_unit</span> AC
+                            </div>
+<div class="flex items-center text-on-surface-variant text-label-bold">
+<span class="material-symbols-outlined text-sm mr-xs">shower</span> Private Bath
+                            </div>
+</div>
+</div>
+</div>
+<!-- Card 2 -->
+<div class="group bg-surface-container-lowest rounded-xl border border-outline-variant overflow-hidden shadow-sm hover:shadow-md transition-shadow">
+<div class="relative h-64 overflow-hidden">
+<div class="w-full h-full bg-cover bg-center group-hover:scale-105 transition-transform duration-500" data-alt="A modern, industrial-style kost interior featuring exposed brick accents and warm wooden flooring. A comfortable ergonomic chair sits at a designer desk. The lighting is warm and inviting, perfect for a professional working environment. The aesthetic is sophisticated corporate modernism with high-utility furniture." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAU4vFPQX_zQQe-ABn4CRRYioCObAvjjm2d2ArKjPClanT9Te8FtTugWCFamGtgMDpIfRwgixb9E8psIQmad3VIxZJxHSU3gqYiCF0Mk9ksB08RxJqKCbb4PjUI6xlF_VdDJFNuF5Au_-_6lEoMa2CRHYvupRy0f4uTyEy4yc7yqU_rKUPFxrItPavitmeyNdzeuqgRWL3HkzbLQUk7MKiRcLAInseMw3GkwVBj9FME1Wgk4_uI-usyxg')"></div>
+<div class="absolute top-sm left-sm bg-tertiary-container text-on-tertiary-container px-sm py-1 rounded-full text-label-bold">
+                            Available
+                        </div>
+</div>
+<div class="p-sm space-y-xs">
+<div class="flex justify-between items-start">
+<h4 class="font-headline-sm text-headline-sm text-on-surface">Urban Loft Living</h4>
+<span class="text-primary font-bold text-body-md">3.2M <span class="text-label-bold font-normal text-on-surface-variant">/mo</span></span>
+</div>
+<div class="flex items-center text-on-surface-variant text-body-sm">
+<span class="material-symbols-outlined text-sm mr-xs">location_on</span>
+                            SCBD, Jakarta
+                        </div>
+<div class="flex gap-sm pt-xs border-t border-outline-variant">
+<div class="flex items-center text-on-surface-variant text-label-bold">
+<span class="material-symbols-outlined text-sm mr-xs">local_parking</span> Parking
+                            </div>
+<div class="flex items-center text-on-surface-variant text-label-bold">
+<span class="material-symbols-outlined text-sm mr-xs">fitness_center</span> Gym
+                            </div>
+<div class="flex items-center text-on-surface-variant text-label-bold">
+<span class="material-symbols-outlined text-sm mr-xs">cleaning_services</span> Laundry
+                            </div>
+</div>
+</div>
+</div>
+<!-- Card 3 -->
+<div class="group bg-surface-container-lowest rounded-xl border border-outline-variant overflow-hidden shadow-sm hover:shadow-md transition-shadow">
+<div class="relative h-64 overflow-hidden">
+<div class="w-full h-full bg-cover bg-center group-hover:scale-105 transition-transform duration-500" data-alt="A contemporary bedroom in a high-rise residence with a panoramic city view through floor-to-ceiling windows. The room is styled with premium neutral fabrics and sleek metallic finishes. The mood is high-end and exclusive. The visual style is crisp and professional, using tonal layers and ambient lighting to convey luxury." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAKo6PxusFsWvXkoP0s-oHMI0WXrweU4CKWE_yiUU3sJNWBSoGQQVyd3PWGyCOmGvVuuwHfn2zs4SeDgMWy89tyCJXoMeI5M4usN4p9XEpOtKQyYtyMfL7nUI6TIH44JC92wJsRxUxULIKBhxWSuyZC4aMTR4mTrDmpD738eeVDzOozpToJEi46gAAWo3SftXARR5tcrb6N0MSKxRUqq5Keb4bhOoSa_aGOJEXi0aYgmQyCQBwMBd6ZPQ')"></div>
+<div class="absolute top-sm left-sm bg-secondary-container text-on-secondary-container px-sm py-1 rounded-full text-label-bold">
+                            Occupied
+                        </div>
+</div>
+<div class="p-sm space-y-xs">
+<div class="flex justify-between items-start">
+<h4 class="font-headline-sm text-headline-sm text-on-surface">Skyline Residences</h4>
+<span class="text-primary font-bold text-body-md">4.5M <span class="text-label-bold font-normal text-on-surface-variant">/mo</span></span>
+</div>
+<div class="flex items-center text-on-surface-variant text-body-sm">
+<span class="material-symbols-outlined text-sm mr-xs">location_on</span>
+                            Menteng, Central Jakarta
+                        </div>
+<div class="flex gap-sm pt-xs border-t border-outline-variant">
+<div class="flex items-center text-on-surface-variant text-label-bold">
+<span class="material-symbols-outlined text-sm mr-xs">pool</span> Pool
+                            </div>
+<div class="flex items-center text-on-surface-variant text-label-bold">
+<span class="material-symbols-outlined text-sm mr-xs">security</span> 24/7 Guard
+                            </div>
+<div class="flex items-center text-on-surface-variant text-label-bold">
+<span class="material-symbols-outlined text-sm mr-xs">coffee</span> Lounge
+                            </div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Why Choose Us -->
+<section class="bg-surface-container-low py-xl px-margin-mobile md:px-margin-desktop">
+<div class="max-w-7xl mx-auto">
+<div class="text-center mb-xl">
+<h3 class="font-display-lg text-display-lg-mobile md:text-headline-md text-primary mb-xs">Why Teridox Property?</h3>
+<p class="text-on-surface-variant max-w-xl mx-auto">We redefine property management with transparency and high-utility services.</p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-lg">
+<div class="bg-white p-lg rounded-xl shadow-sm border border-outline-variant space-y-sm text-center md:text-left">
+<div class="w-12 h-12 bg-primary-fixed flex items-center justify-center rounded-lg mx-auto md:mx-0">
+<span class="material-symbols-outlined text-primary text-3xl">verified_user</span>
+</div>
+<h4 class="font-headline-sm text-headline-sm text-on-surface">Verified Trust</h4>
+<p class="text-on-surface-variant text-body-sm">All our listings undergo a rigorous 20-point quality check. We ensure your safety and contractual transparency from day one.</p>
+</div>
+<div class="bg-white p-lg rounded-xl shadow-sm border border-outline-variant space-y-sm text-center md:text-left">
+<div class="w-12 h-12 bg-primary-fixed flex items-center justify-center rounded-lg mx-auto md:mx-0">
+<span class="material-symbols-outlined text-primary text-3xl">bolt</span>
+</div>
+<h4 class="font-headline-sm text-headline-sm text-on-surface">Seamless Convenience</h4>
+<p class="text-on-surface-variant text-body-sm">Pay bills, report maintenance, and track your history all through our dedicated tenant portal. No more messy paperwork.</p>
+</div>
+<div class="bg-white p-lg rounded-xl shadow-sm border border-outline-variant space-y-sm text-center md:text-left">
+<div class="w-12 h-12 bg-primary-fixed flex items-center justify-center rounded-lg mx-auto md:mx-0">
+<span class="material-symbols-outlined text-primary text-3xl">apartment</span>
+</div>
+<h4 class="font-headline-sm text-headline-sm text-on-surface">Elite Facilities</h4>
+<p class="text-on-surface-variant text-body-sm">From fiber-optic internet to laundry services, our properties are equipped with the amenities you need to thrive.</p>
+</div>
+</div>
+</div>
+</section>
+<!-- CTA Section -->
+<section class="relative py-xl px-margin-mobile md:px-margin-desktop overflow-hidden">
+<div class="absolute inset-0 z-0">
+
+</div>
+<div class="relative z-10 max-w-4xl mx-auto bg-primary text-white rounded-full py-xl px-lg text-center shadow-xl">
+<h3 class="font-headline-md text-headline-md mb-sm">Ready to Find Your Next Home?</h3>
+<p class="text-primary-fixed-dim mb-lg max-w-lg mx-auto">Explore over 500+ premium listings across the city's most strategic locations.</p>
+<div class="flex flex-col md:flex-row gap-sm justify-center">
+<button class="bg-white text-primary px-xl py-sm rounded-full font-label-bold text-label-bold hover:bg-surface-bright transition-colors shadow-lg">
+                        Browse All Listings
+                    </button>
+<button class="border border-white text-white px-xl py-sm rounded-full font-label-bold text-label-bold hover:bg-white/10 transition-colors">
+                        Contact Support
+                    </button>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="w-full px-margin-desktop py-xl flex flex-col md:flex-row justify-between items-center gap-md bg-on-primary-fixed dark:bg-on-primary-fixed border-t border-outline-variant">
+<div class="flex flex-col items-center md:items-start gap-xs">
+<h1 class="text-headline-sm font-headline-sm text-surface-lowest">Teridox Property</h1>
+<p class="font-body-sm text-body-sm text-on-primary-fixed-variant">© 2024 Teridox Property Management. All rights reserved.</p>
+</div>
+<div class="flex flex-wrap justify-center gap-lg">
+<a class="font-label-bold text-label-bold text-on-primary-fixed-variant hover:text-tertiary-fixed transition-colors" href="#">Terms of Service</a>
+<a class="font-label-bold text-label-bold text-on-primary-fixed-variant hover:text-tertiary-fixed transition-colors" href="#">Privacy Policy</a>
+<a class="font-label-bold text-label-bold text-on-primary-fixed-variant hover:text-tertiary-fixed transition-colors" href="#">Tenant Portal</a>
+<a class="font-label-bold text-label-bold text-on-primary-fixed-variant hover:text-tertiary-fixed transition-colors" href="#">Owner Portal</a>
+<a class="font-label-bold text-label-bold text-on-primary-fixed-variant hover:text-tertiary-fixed transition-colors" href="#">Careers</a>
+</div>
+</footer>
+<script>
+        // Simple scroll interaction for header
+        window.addEventListener('scroll', () => {
+            const header = document.querySelector('header');
+            if (window.scrollY > 20) {
+                header.classList.add('shadow-md');
+                header.classList.remove('shadow-sm');
+            } else {
+                header.classList.add('shadow-sm');
+                header.classList.remove('shadow-md');
+            }
+        });
+
+        // Search bar interaction
+        document.querySelectorAll('input, select').forEach(el => {
+            el.addEventListener('focus', () => {
+                el.closest('div').classList.add('ring-2', 'ring-primary/10');
+            });
+            el.addEventListener('blur', () => {
+                el.closest('div').classList.remove('ring-2', 'ring-primary/10');
+            });
+        });
+    </script>
+</body></html>

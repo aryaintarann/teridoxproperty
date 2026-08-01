@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Listing Units | Teridox Property</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-tertiary-container": "#58ccc6",
+                    "on-tertiary-fixed-variant": "#00504d",
+                    "primary": "#00355f",
+                    "surface-bright": "#f7fafc",
+                    "on-secondary-container": "#596376",
+                    "primary-fixed": "#d2e4ff",
+                    "surface-container-low": "#f1f4f6",
+                    "outline-variant": "#c2c7d1",
+                    "surface-tint": "#2d6197",
+                    "on-error-container": "#93000a",
+                    "tertiary": "#003b38",
+                    "surface-container-high": "#e5e9eb",
+                    "secondary": "#555f71",
+                    "on-primary-container": "#8ebdf9",
+                    "secondary-container": "#d6e0f6",
+                    "tertiary-fixed": "#84f5ee",
+                    "surface-dim": "#d7dadc",
+                    "on-tertiary-fixed": "#00201e",
+                    "primary-fixed-dim": "#a0c9ff",
+                    "on-secondary": "#ffffff",
+                    "inverse-primary": "#a0c9ff",
+                    "surface-container": "#ebeef0",
+                    "secondary-fixed": "#d9e3f9",
+                    "inverse-on-surface": "#eef1f3",
+                    "outline": "#727780",
+                    "on-primary-fixed": "#001c37",
+                    "on-secondary-fixed": "#121c2c",
+                    "surface-variant": "#e0e3e5",
+                    "error": "#ba1a1a",
+                    "tertiary-fixed-dim": "#66d8d2",
+                    "on-surface": "#181c1e",
+                    "secondary-fixed-dim": "#bdc7dc",
+                    "background": "#f7fafc",
+                    "on-tertiary": "#ffffff",
+                    "surface-container-highest": "#e0e3e5",
+                    "on-primary": "#ffffff",
+                    "on-primary-fixed-variant": "#07497d",
+                    "surface": "#f7fafc",
+                    "inverse-surface": "#2d3133",
+                    "error-container": "#ffdad6",
+                    "on-background": "#181c1e",
+                    "primary-container": "#0f4c81",
+                    "on-surface-variant": "#42474f",
+                    "on-secondary-fixed-variant": "#3d4759",
+                    "on-error": "#ffffff",
+                    "tertiary-container": "#005451",
+                    "surface-container-lowest": "#ffffff"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.125rem",
+                    "lg": "0.25rem",
+                    "xl": "0.5rem",
+                    "full": "0.75rem"
+            },
+            "spacing": {
+                    "margin-desktop": "48px",
+                    "base": "4px",
+                    "md": "24px",
+                    "xl": "64px",
+                    "sm": "16px",
+                    "lg": "40px",
+                    "xs": "8px",
+                    "margin-mobile": "16px",
+                    "gutter": "24px"
+            },
+            "fontFamily": {
+                    "headline-md": ["Montserrat"],
+                    "display-lg": ["Montserrat"],
+                    "body-lg": ["Inter"],
+                    "body-md": ["Inter"],
+                    "body-sm": ["Inter"],
+                    "label-bold": ["Inter"],
+                    "headline-sm": ["Montserrat"],
+                    "display-lg-mobile": ["Montserrat"]
+            },
+            "fontSize": {
+                    "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                    "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                    "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "body-sm": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                    "label-bold": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                    "headline-sm": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                    "display-lg-mobile": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "700"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #f1f4f6; }
+        ::-webkit-scrollbar-thumb { background: #c2c7d1; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #727780; }
+    </style>
+</head>
+<body class="bg-surface-bright text-on-surface font-body-md">
+<!-- TopNavBar -->
+<nav class="sticky top-0 z-50 flex justify-between items-center w-full px-margin-desktop py-4 max-w-7xl mx-auto bg-surface-bright dark:bg-inverse-surface shadow-sm">
+<div class="text-headline-md font-headline-md font-bold text-primary dark:text-primary-fixed-dim">
+            Teridox Property
+        </div>
+<div class="hidden md:flex items-center gap-lg">
+<a class="font-label-bold text-label-bold text-on-secondary-container dark:text-on-secondary-fixed-variant hover:text-primary dark:hover:text-primary-fixed-dim transition-colors duration-200" href="#">Home</a>
+<a class="font-label-bold text-label-bold text-on-secondary-container dark:text-on-secondary-fixed-variant hover:text-primary dark:hover:text-primary-fixed-dim transition-colors duration-200" href="#">About Us</a>
+<a class="font-label-bold text-label-bold text-primary dark:text-primary-fixed-dim border-b-2 border-primary dark:border-primary-fixed-dim pb-1 font-bold transition-all" href="#">Listing Unit</a>
+<a class="font-label-bold text-label-bold text-on-secondary-container dark:text-on-secondary-fixed-variant hover:text-primary dark:hover:text-primary-fixed-dim transition-colors duration-200" href="#">FAQ</a>
+<a class="font-label-bold text-label-bold text-on-secondary-container dark:text-on-secondary-fixed-variant hover:text-primary dark:hover:text-primary-fixed-dim transition-colors duration-200" href="#">Contact Us</a>
+</div>
+<div class="flex items-center gap-sm">
+<button class="font-label-bold text-label-bold px-sm py-xs text-primary bg-transparent border border-primary hover:bg-primary hover:text-on-primary transition-all rounded-lg">
+                Sign In
+            </button>
+</div>
+</nav>
+<main class="max-w-7xl mx-auto px-margin-desktop py-lg">
+<div class="mb-lg">
+<h1 class="font-display-lg text-display-lg text-primary mb-xs">Available Units</h1>
+<p class="text-on-surface-variant max-w-2xl font-body-lg">Find your perfect living space from our curated list of managed properties. Premium locations, verified listings, and seamless booking.</p>
+</div>
+<div class="flex flex-col lg:flex-row gap-gutter">
+<!-- Filter Sidebar -->
+<aside class="w-full lg:w-72 flex-shrink-0">
+<div class="bg-surface-container-lowest p-sm rounded-xl border border-outline-variant shadow-sm sticky top-24">
+<div class="flex items-center justify-between mb-sm">
+<h2 class="font-headline-sm text-headline-sm">Filters</h2>
+<button class="text-primary font-label-bold text-label-bold hover:underline">Reset All</button>
+</div>
+<!-- Location -->
+<div class="mb-md">
+<label class="block font-label-bold text-label-bold text-on-surface-variant mb-xs">LOCATION</label>
+<div class="relative">
+<span class="material-symbols-outlined absolute left-2 top-1/2 -translate-y-1/2 text-on-surface-variant text-sm">location_on</span>
+<select class="w-full pl-8 pr-4 py-2 border border-outline-variant rounded-lg bg-surface text-body-sm focus:ring-2 focus:ring-primary focus:ring-opacity-10 outline-none appearance-none">
+<option>Central Jakarta</option>
+<option>South Jakarta</option>
+<option>West Jakarta</option>
+<option>Tangerang</option>
+</select>
+</div>
+</div>
+<!-- Price Range -->
+<div class="mb-md">
+<label class="block font-label-bold text-label-bold text-on-surface-variant mb-xs">PRICE RANGE (MONTHLY)</label>
+<div class="space-y-xs">
+<input class="w-full h-1 bg-secondary-container rounded-lg appearance-none cursor-pointer accent-primary" max="10000000" min="1000000" step="500000" type="range"/>
+<div class="flex justify-between text-body-sm text-on-surface-variant">
+<span>1M IDR</span>
+<span>10M IDR</span>
+</div>
+</div>
+</div>
+<!-- Room Type -->
+<div class="mb-md">
+<label class="block font-label-bold text-label-bold text-on-surface-variant mb-xs">ROOM TYPE</label>
+<div class="grid grid-cols-2 gap-2">
+<button class="flex items-center justify-center gap-1 py-2 px-3 border border-primary bg-primary-fixed text-primary rounded-lg font-label-bold text-label-bold">
+<span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">ac_unit</span> AC
+                            </button>
+<button class="flex items-center justify-center gap-1 py-2 px-3 border border-outline-variant text-on-surface-variant rounded-lg font-label-bold text-label-bold hover:border-primary">
+<span class="material-symbols-outlined text-sm">mode_fan</span> Non-AC
+                            </button>
+</div>
+</div>
+<!-- Amenities -->
+<div class="mb-md">
+<label class="block font-label-bold text-label-bold text-on-surface-variant mb-xs">AMENITIES</label>
+<div class="space-y-2">
+<label class="flex items-center gap-2 cursor-pointer group">
+<input class="w-4 h-4 rounded border-outline-variant text-primary focus:ring-primary" type="checkbox"/>
+<span class="text-body-sm text-on-surface group-hover:text-primary transition-colors">WiFi Included</span>
+</label>
+<label class="flex items-center gap-2 cursor-pointer group">
+<input class="w-4 h-4 rounded border-outline-variant text-primary focus:ring-primary" type="checkbox"/>
+<span class="text-body-sm text-on-surface group-hover:text-primary transition-colors">Private Bathroom</span>
+</label>
+<label class="flex items-center gap-2 cursor-pointer group">
+<input class="w-4 h-4 rounded border-outline-variant text-primary focus:ring-primary" type="checkbox"/>
+<span class="text-body-sm text-on-surface group-hover:text-primary transition-colors">Cleaning Service</span>
+</label>
+</div>
+</div>
+<button class="w-full py-3 bg-primary text-on-primary rounded-lg font-label-bold text-label-bold shadow-sm hover:opacity-90 transition-opacity">
+                        Apply Filters
+                    </button>
+</div>
+</aside>
+<!-- Listing Grid -->
+<div class="flex-1">
+<div class="flex justify-between items-center mb-md">
+<p class="text-body-sm text-on-surface-variant"><span class="font-bold text-on-surface">124</span> units found in Jakarta</p>
+<div class="flex items-center gap-xs">
+<span class="text-body-sm text-on-surface-variant">Sort by:</span>
+<select class="bg-transparent border-none text-body-sm font-bold text-primary focus:ring-0 cursor-pointer">
+<option>Highest Popularity</option>
+<option>Lowest Price</option>
+<option>Highest Rating</option>
+</select>
+</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-gutter">
+<!-- Unit Card 1 -->
+<div class="bg-surface-container-lowest rounded-xl border border-outline-variant overflow-hidden group hover:shadow-lg transition-all duration-300 flex flex-col">
+<div class="relative h-56 overflow-hidden">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="A wide-angle high-resolution photograph of a modern, sun-drenched minimalist apartment interior with light oak wood floors and floor-to-ceiling windows. The room is decorated in a sophisticated corporate modern style with a primary blue velvet armchair and sleek white cabinetry. Soft morning sunlight streams through sheer white curtains, creating a serene and professional residential atmosphere." src="https://lh3.googleusercontent.com/aida-public/AB6AXuB4WBDm3iX5ENo3sIkVUrFDnNwErwAMidcWr337gKsW2lwPH0EGOLQSuePfgCcOXsKoaSmtvfKPWlx7kYUO7YTZFwt46nj-cXHkg-eoVRoWrGyKSpqMs7c4GC4g7SDWStY0uEn8Yotmpg15c3gRSz78MIsuWl80_cYH0op94Oi8Rb2S7Vo6vINSsPvywAeg48NeYNsUxO-IUTiX-C200WqKPgzCGRPF2yQgFf-5oZ4nv6aHkvET6IIk7A"/>
+<div class="absolute top-4 left-4 bg-tertiary text-on-tertiary px-3 py-1 rounded-full font-label-bold text-label-bold">Available</div>
+<button class="absolute top-4 right-4 w-10 h-10 bg-white/90 rounded-full flex items-center justify-center text-primary hover:text-error transition-colors">
+<span class="material-symbols-outlined">favorite</span>
+</button>
+</div>
+<div class="p-sm flex-1 flex flex-col">
+<div class="flex justify-between items-start mb-1">
+<h3 class="font-headline-sm text-headline-sm text-primary group-hover:text-primary-container transition-colors">Teridox Heights A12</h3>
+<div class="flex items-center gap-1 text-on-secondary-container">
+<span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="text-body-sm font-bold">4.8</span>
+</div>
+</div>
+<p class="text-body-sm text-on-surface-variant mb-4 flex items-center gap-1">
+<span class="material-symbols-outlined text-sm">location_on</span> Kuningan, South Jakarta
+                            </p>
+<div class="flex gap-2 mb-4">
+<span class="bg-surface-container px-2 py-1 rounded text-[10px] font-label-bold text-on-surface-variant flex items-center gap-1">
+<span class="material-symbols-outlined text-xs">ac_unit</span> AC
+                                </span>
+<span class="bg-surface-container px-2 py-1 rounded text-[10px] font-label-bold text-on-surface-variant flex items-center gap-1">
+<span class="material-symbols-outlined text-xs">wifi</span> WIFI
+                                </span>
+<span class="bg-surface-container px-2 py-1 rounded text-[10px] font-label-bold text-on-surface-variant flex items-center gap-1">
+<span class="material-symbols-outlined text-xs">bathroom</span> PRIVATE
+                                </span>
+</div>
+<div class="mt-auto pt-4 border-t border-outline-variant flex items-center justify-between">
+<div>
+<span class="text-primary font-bold text-headline-sm">2.5M</span>
+<span class="text-body-sm text-on-surface-variant">/month</span>
+</div>
+<button class="bg-primary text-on-primary px-4 py-2 rounded-lg font-label-bold text-label-bold hover:opacity-90 transition-all">Details</button>
+</div>
+</div>
+</div>
+<!-- Unit Card 2 -->
+<div class="bg-surface-container-lowest rounded-xl border border-outline-variant overflow-hidden group hover:shadow-lg transition-all duration-300 flex flex-col">
+<div class="relative h-56 overflow-hidden">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="A professional architectural interior shot of a contemporary urban loft featuring exposed concrete walls and high ceilings. The space is furnished with a minimalist desk setup, a premium ergonomic chair, and deep navy blue accents that match the corporate modern aesthetic. Large windows show a blurred city skyline at dusk with warm golden lighting reflecting on polished surfaces." src="https://lh3.googleusercontent.com/aida-public/AB6AXuC-dWVBFA9QncwqbifG9WYWtW2rw-kfP9kHdShRtz7ueKd1ofX8BU8yXkbZs-PFvgd84RJJNTdyEtjsUUIuP4MXNnS7PcTHvc1UvQZDWXL_sYufvtwK5P7Owmdio-_NRwtvtcEc3y40Hiy_cQEnTTSv1EcbDELacLy2m1YT0zcwpJscOgavE18Vqc4YxB2j-OBdHx6iQ-HdKGI867JgOT6Yk18bv4nm6YJ6CC8OJ1YF7YbzS5271_CYmw"/>
+<div class="absolute top-4 left-4 bg-secondary text-on-secondary px-3 py-1 rounded-full font-label-bold text-label-bold">Maintenance</div>
+</div>
+<div class="p-sm flex-1 flex flex-col">
+<div class="flex justify-between items-start mb-1">
+<h3 class="font-headline-sm text-headline-sm text-primary">Urban Loft C-04</h3>
+<div class="flex items-center gap-1 text-on-secondary-container">
+<span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="text-body-sm font-bold">4.9</span>
+</div>
+</div>
+<p class="text-body-sm text-on-surface-variant mb-4 flex items-center gap-1">
+<span class="material-symbols-outlined text-sm">location_on</span> Senayan, Central Jakarta
+                            </p>
+<div class="flex gap-2 mb-4">
+<span class="bg-surface-container px-2 py-1 rounded text-[10px] font-label-bold text-on-surface-variant flex items-center gap-1">
+<span class="material-symbols-outlined text-xs">ac_unit</span> AC
+                                </span>
+<span class="bg-surface-container px-2 py-1 rounded text-[10px] font-label-bold text-on-surface-variant flex items-center gap-1">
+<span class="material-symbols-outlined text-xs">security</span> 24H
+                                </span>
+</div>
+<div class="mt-auto pt-4 border-t border-outline-variant flex items-center justify-between">
+<div>
+<span class="text-primary font-bold text-headline-sm">3.8M</span>
+<span class="text-body-sm text-on-surface-variant">/month</span>
+</div>
+<button class="bg-primary text-on-primary px-4 py-2 rounded-lg font-label-bold text-label-bold hover:opacity-90 transition-all">Details</button>
+</div>
+</div>
+</div>
+<!-- Unit Card 3 -->
+<div class="bg-surface-container-lowest rounded-xl border border-outline-variant overflow-hidden group hover:shadow-lg transition-all duration-300 flex flex-col">
+<div class="relative h-56 overflow-hidden">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="A brightly lit, clean white bedroom in a modern residential complex featuring minimalist Scandinavian furniture. The lighting is crisp and even, highlighting the soft teal and neutral gray color palette of the bedding and decor. A small indoor plant sits on a light-wood nightstand, adding a touch of warmth to the architectural professional design. High-key lighting emphasizes a fresh, reliable property management brand style." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDmZ9Q1Q86MU5GK-zAZSw_EYgv8TKphbQqFt4c2GFRauE1T9yATOUq45Z_IXggnHjX4NLyKOyTzfwo1CGTe--VA_lEDKeYXfFSMLy3LXQt5JOQGoHrldvvTJiJmZMI8KAIWh3Ji5UuU-Iza1UlA8p9bjFcuXAz3DeQr_0K9UVApnCzyUR99aWb0GQkVoKuMbqHqh44JRBpgAwZ9yBIybZ8OgFBNExCE7HZtDEoLFZZoFzb86C3sP5xf0A"/>
+<div class="absolute top-4 left-4 bg-tertiary text-on-tertiary px-3 py-1 rounded-full font-label-bold text-label-bold">Available</div>
+</div>
+<div class="p-sm flex-1 flex flex-col">
+<div class="flex justify-between items-start mb-1">
+<h3 class="font-headline-sm text-headline-sm text-primary">Eco Residence G-09</h3>
+<div class="flex items-center gap-1 text-on-secondary-container">
+<span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="text-body-sm font-bold">4.6</span>
+</div>
+</div>
+<p class="text-body-sm text-on-surface-variant mb-4 flex items-center gap-1">
+<span class="material-symbols-outlined text-sm">location_on</span> BSD, Tangerang
+                            </p>
+<div class="flex gap-2 mb-4">
+<span class="bg-surface-container px-2 py-1 rounded text-[10px] font-label-bold text-on-surface-variant flex items-center gap-1">
+<span class="material-symbols-outlined text-xs">mode_fan</span> Non-AC
+                                </span>
+<span class="bg-surface-container px-2 py-1 rounded text-[10px] font-label-bold text-on-surface-variant flex items-center gap-1">
+<span class="material-symbols-outlined text-xs">cleaning_services</span> Weekly
+                                </span>
+</div>
+<div class="mt-auto pt-4 border-t border-outline-variant flex items-center justify-between">
+<div>
+<span class="text-primary font-bold text-headline-sm">1.8M</span>
+<span class="text-body-sm text-on-surface-variant">/month</span>
+</div>
+<button class="bg-primary text-on-primary px-4 py-2 rounded-lg font-label-bold text-label-bold hover:opacity-90 transition-all">Details</button>
+</div>
+</div>
+</div>
+<!-- Duplicate for 6-9 cards logic - Using variants -->
+<!-- Unit Card 4 -->
+<div class="bg-surface-container-lowest rounded-xl border border-outline-variant overflow-hidden group hover:shadow-lg transition-all duration-300 flex flex-col">
+<div class="relative h-56 overflow-hidden">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="A sleek corporate-style studio apartment with integrated smart home features and a clean, high-utility layout. The room features dark wood paneling, a hidden kitchenette, and premium navy blue textiles. Lighting is architectural and recessed, creating a sophisticated environment for urban professionals. The overall mood is reliable, structured, and modern." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDfaLqurmdZYo3sYuypPOnCNtb-Nl462YnKnHiSpFCnOSb2EWRWyboeYusHTXO_y1p244lIvSgFCBScQRPRpyqzsGE4FTcK1oos2AhUvFp6RwFUldUP5KDLWWpIW1s2nrmXQ0GZo1CY8k3Kb0D4xqAPHeBxK0_8YZrLo1qxztRvf0Vh1IvpOJOjroHcO7xaGMedD-g1LRkCbZG4KU9CrsIc4bY8lzUvsbQBUZfNQZRgdrr52jYVWYITnw"/>
+<div class="absolute top-4 left-4 bg-tertiary text-on-tertiary px-3 py-1 rounded-full font-label-bold text-label-bold">Available</div>
+</div>
+<div class="p-sm flex-1 flex flex-col">
+<div class="flex justify-between items-start mb-1">
+<h3 class="font-headline-sm text-headline-sm text-primary">Smart Studio X-1</h3>
+<div class="flex items-center gap-1 text-on-secondary-container">
+<span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="text-body-sm font-bold">5.0</span>
+</div>
+</div>
+<p class="text-body-sm text-on-surface-variant mb-4 flex items-center gap-1">
+<span class="material-symbols-outlined text-sm">location_on</span> Thamrin, Jakarta
+                            </p>
+<div class="mt-auto pt-4 border-t border-outline-variant flex items-center justify-between">
+<div>
+<span class="text-primary font-bold text-headline-sm">4.5M</span>
+<span class="text-body-sm text-on-surface-variant">/month</span>
+</div>
+<button class="bg-primary text-on-primary px-4 py-2 rounded-lg font-label-bold text-label-bold hover:opacity-90 transition-all">Details</button>
+</div>
+</div>
+</div>
+<!-- Unit Card 5 -->
+<div class="bg-surface-container-lowest rounded-xl border border-outline-variant overflow-hidden group hover:shadow-lg transition-all duration-300 flex flex-col">
+<div class="relative h-56 overflow-hidden">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="A cozy but professional room for rent in a residential district, showing a well-organized space with a large window looking out onto a garden. The interior design follows corporate modernism with a clean gray and white palette, accented by deep blue pillows. The room feels architectural and stable, perfect for students or young workers. High-key, natural lighting fills the frame." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCQ1m59Z6zg-qjDHIHrx0kG9m4WRKsSNXpVDRpsV5B8GSYdth-bwUvpFDVdX7O309EhHiJO4RUHlR7qJZu1UlmpWGtAZXENy6mQOgmhYxSNID1WksN-rdAh_SzEwRK6JVIG2Idytzn_YNtN6vMD21pZiPkOyK8Q6UgjbgmMjrv3nxchzWYOV8JbJv57o98qdRDT3bFTLjOnYjdFXlBYvuLv8yTAI_SgGh_in-OIfj22Slp9Z3a6RLr1wg"/>
+<div class="absolute top-4 left-4 bg-tertiary text-on-tertiary px-3 py-1 rounded-full font-label-bold text-label-bold">Available</div>
+</div>
+<div class="p-sm flex-1 flex flex-col">
+<div class="flex justify-between items-start mb-1">
+<h3 class="font-headline-sm text-headline-sm text-primary">Garden View Room</h3>
+<div class="flex items-center gap-1 text-on-secondary-container">
+<span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="text-body-sm font-bold">4.7</span>
+</div>
+</div>
+<p class="text-body-sm text-on-surface-variant mb-4 flex items-center gap-1">
+<span class="material-symbols-outlined text-sm">location_on</span> Bintaro, South Jakarta
+                            </p>
+<div class="mt-auto pt-4 border-t border-outline-variant flex items-center justify-between">
+<div>
+<span class="text-primary font-bold text-headline-sm">2.1M</span>
+<span class="text-body-sm text-on-surface-variant">/month</span>
+</div>
+<button class="bg-primary text-on-primary px-4 py-2 rounded-lg font-label-bold text-label-bold hover:opacity-90 transition-all">Details</button>
+</div>
+</div>
+</div>
+<!-- Unit Card 6 -->
+<div class="bg-surface-container-lowest rounded-xl border border-outline-variant overflow-hidden group hover:shadow-lg transition-all duration-300 flex flex-col">
+<div class="relative h-56 overflow-hidden">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="A minimalist executive suite with high-end furniture and a monochromatic gray color scheme punctuated by dark blue decorative elements. The photography style is professional architectural marketing, using soft-box lighting to create clean gradients on the walls. The layout is high-density but feels spacious through clever use of glass partitions and mirror effects." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAQhATSb2eQMIrKIfqSeq4AOku6mey1CagLq4DMWmT580yiGfev-Czol3LO9OMPHRutbIKPYbblHEINRTiJco-8jfwIlfyfZiqAiTGXt3xzckj8tntwfcKWOg_fqSdlGKlNdrAO3-iMyQNMgfhoGnETsuhIMsqW8iKqF26sGbYm7GIhg8KlbBOpoTmGmVY58pQ5x7ZxQWV2if50ANkCEgMA74It_2szJ2S0OjCJir7eHyX8kMp_WzeGYg"/>
+<div class="absolute top-4 left-4 bg-tertiary text-on-tertiary px-3 py-1 rounded-full font-label-bold text-label-bold">Available</div>
+</div>
+<div class="p-sm flex-1 flex flex-col">
+<div class="flex justify-between items-start mb-1">
+<h3 class="font-headline-sm text-headline-sm text-primary">Executive Suite 402</h3>
+<div class="flex items-center gap-1 text-on-secondary-container">
+<span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="text-body-sm font-bold">4.9</span>
+</div>
+</div>
+<p class="text-body-sm text-on-surface-variant mb-4 flex items-center gap-1">
+<span class="material-symbols-outlined text-sm">location_on</span> SCBD, South Jakarta
+                            </p>
+<div class="mt-auto pt-4 border-t border-outline-variant flex items-center justify-between">
+<div>
+<span class="text-primary font-bold text-headline-sm">5.5M</span>
+<span class="text-body-sm text-on-surface-variant">/month</span>
+</div>
+<button class="bg-primary text-on-primary px-4 py-2 rounded-lg font-label-bold text-label-bold hover:opacity-90 transition-all">Details</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Pagination -->
+<div class="mt-xl flex justify-center items-center gap-2">
+<button class="w-10 h-10 flex items-center justify-center rounded-lg border border-outline-variant text-on-surface-variant hover:border-primary hover:text-primary transition-colors">
+<span class="material-symbols-outlined">chevron_left</span>
+</button>
+<button class="w-10 h-10 flex items-center justify-center rounded-lg bg-primary text-on-primary font-label-bold text-label-bold">1</button>
+<button class="w-10 h-10 flex items-center justify-center rounded-lg border border-outline-variant text-on-surface hover:border-primary hover:text-primary transition-colors font-label-bold text-label-bold">2</button>
+<button class="w-10 h-10 flex items-center justify-center rounded-lg border border-outline-variant text-on-surface hover:border-primary hover:text-primary transition-colors font-label-bold text-label-bold">3</button>
+<span class="text-on-surface-variant px-2">...</span>
+<button class="w-10 h-10 flex items-center justify-center rounded-lg border border-outline-variant text-on-surface hover:border-primary hover:text-primary transition-colors font-label-bold text-label-bold">12</button>
+<button class="w-10 h-10 flex items-center justify-center rounded-lg border border-outline-variant text-on-surface-variant hover:border-primary hover:text-primary transition-colors">
+<span class="material-symbols-outlined">chevron_right</span>
+</button>
+</div>
+</div>
+</div>
+</main>
+<!-- Footer -->
+<footer class="w-full px-margin-desktop py-xl flex flex-col md:flex-row justify-between items-center gap-md bg-on-primary-fixed dark:bg-on-primary-fixed border-t border-outline-variant mt-xl">
+<div class="flex flex-col gap-xs items-center md:items-start">
+<div class="text-headline-sm font-headline-sm text-surface-lowest">Teridox Property</div>
+<p class="font-body-sm text-body-sm text-on-primary-fixed-variant max-w-xs text-center md:text-left">© 2024 Teridox Property Management. All rights reserved.</p>
+</div>
+<div class="flex flex-wrap justify-center gap-md">
+<a class="font-label-bold text-label-bold text-on-primary-fixed-variant hover:text-tertiary-fixed transition-colors" href="#">Terms of Service</a>
+<a class="font-label-bold text-label-bold text-on-primary-fixed-variant hover:text-tertiary-fixed transition-colors" href="#">Privacy Policy</a>
+<a class="font-label-bold text-label-bold text-on-primary-fixed-variant hover:text-tertiary-fixed transition-colors" href="#">Tenant Portal</a>
+<a class="font-label-bold text-label-bold text-on-primary-fixed-variant hover:text-tertiary-fixed transition-colors" href="#">Owner Portal</a>
+<a class="font-label-bold text-label-bold text-on-primary-fixed-variant hover:text-tertiary-fixed transition-colors" href="#">Careers</a>
+</div>
+<div class="flex gap-sm">
+<a class="w-10 h-10 rounded-full border border-on-primary-fixed-variant flex items-center justify-center text-on-primary-fixed-variant hover:bg-primary-fixed hover:text-primary transition-all" href="#">
+<span class="material-symbols-outlined">language</span>
+</a>
+<a class="w-10 h-10 rounded-full border border-on-primary-fixed-variant flex items-center justify-center text-on-primary-fixed-variant hover:bg-primary-fixed hover:text-primary transition-all" href="#">
+<span class="material-symbols-outlined">mail</span>
+</a>
+</div>
+</footer>
+<script>
+        // Simple interactivity for demonstration
+        document.querySelectorAll('button').forEach(btn => {
+            btn.addEventListener('click', function() {
+                this.classList.add('scale-95');
+                setTimeout(() => this.classList.remove('scale-95'), 100);
+            });
+        });
+    </script>
+</body></html>
