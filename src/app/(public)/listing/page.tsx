@@ -115,23 +115,22 @@ export default function ListingPage() {
           <phantom-ui loading={isGridLoading} animation="pulse" reveal={0.3}>
             <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
               {availableUnits.map((unit) => (
-                <div key={unit.id} className="bg-white rounded-xl border border-td-outline-variant overflow-hidden group hover:shadow-lg transition-all duration-300 flex flex-col">
-                  <div className="relative h-56 overflow-hidden">
+                <div key={unit.id} className="relative bg-white rounded-xl border border-td-outline-variant overflow-hidden group hover:shadow-lg transition-all duration-300 flex flex-col">
+                  <Link href={`/listing/${unit.id}`} className="absolute inset-0 z-0" aria-label={`Lihat detail ${unit.name}`} />
+                  <div className="relative h-56 overflow-hidden pointer-events-none">
                     <Image src={unit.images[0]} alt={unit.name} fill sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw" className="object-cover group-hover:scale-105 transition-transform duration-500" />
                     <div className={`absolute top-4 left-4 px-3 py-1 rounded-full text-xs font-semibold tracking-wider ${
                       unit.status === "Tersedia" ? "bg-td-tertiary text-td-on-tertiary" : "bg-td-secondary text-td-on-secondary"
                     }`}>
                       {unit.status}
                     </div>
-                    <button className="absolute top-4 right-4 w-10 h-10 bg-white/90 rounded-full flex items-center justify-center text-td-primary hover:text-td-error transition-colors">
-                      <MaterialIcon name="favorite" />
-                    </button>
                   </div>
-                  <div className="p-4 flex-1 flex flex-col">
+                  <button className="absolute top-4 right-4 w-10 h-10 bg-white/90 rounded-full flex items-center justify-center text-td-primary hover:text-td-error transition-colors z-10 pointer-events-auto">
+                    <MaterialIcon name="favorite" />
+                  </button>
+                  <div className="p-4 flex-1 flex flex-col pointer-events-none">
                     <div className="flex justify-between items-start mb-1">
-                      <Link href={`/listing/${unit.id}`}>
-                        <h3 className="font-heading text-xl font-semibold text-td-primary group-hover:text-td-primary-container transition-colors">{unit.name}</h3>
-                      </Link>
+                      <h3 className="font-heading text-xl font-semibold text-td-primary group-hover:text-td-primary-container transition-colors">{unit.name}</h3>
                       <div className="flex items-center gap-1 text-td-on-secondary-container">
                         <MaterialIcon name="star" className="text-sm" filled />
                         <span className="text-sm font-bold">{unit.rating}</span>
@@ -153,8 +152,8 @@ export default function ListingPage() {
                         <span className="text-sm text-td-on-surface-variant">/bln</span>
                       </div>
                       <button 
-                        onClick={() => gooeyToast.success(`Pemesanan ${unit.name} ditambahkan!`)}
-                        className="bg-td-primary text-white px-4 py-2 rounded-lg text-xs font-semibold tracking-wider uppercase hover:opacity-90 transition-all"
+                        onClick={(e) => gooeyToast.success(`Pemesanan ${unit.name} ditambahkan!`)}
+                        className="relative z-10 pointer-events-auto bg-td-primary text-white px-4 py-2 rounded-lg text-xs font-semibold tracking-wider uppercase hover:opacity-90 transition-all"
                       >
                         Pesan
                       </button>
