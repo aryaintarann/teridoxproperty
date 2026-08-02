@@ -192,3 +192,34 @@ export const contactImages = {
 
 // Featured units for home page (first 3)
 export const featuredUnits = availableUnits.slice(0, 3);
+
+// --- DASHBOARD MOCK DATA ---
+
+export const mockTenants = [
+  { id: "T001", name: "Budi Santoso", email: "budi.s@example.com", phone: "081234567890", unit: "A-101", status: "Active", joinedAt: "2023-01-15" },
+  { id: "T002", name: "Siti Aminah", email: "siti.a@example.com", phone: "081298765432", unit: "B-205", status: "Active", joinedAt: "2023-05-20" },
+  { id: "T003", name: "Andi Wijaya", email: "andi.w@example.com", phone: "085671234567", unit: "A-201", status: "Active", joinedAt: "2024-02-10" },
+  { id: "T004", name: "Reza Rahadian", email: "reza.r@example.com", phone: "081987654321", unit: "A-105", status: "Inactive", joinedAt: "2022-11-01" },
+  { id: "T005", name: "Diana Putri", email: "diana.p@example.com", phone: "081122334455", unit: "A-102", status: "Active", joinedAt: "2023-08-05" },
+];
+
+export const mockContracts = [
+  { id: "C1001", tenantId: "T001", tenantName: "Budi Santoso", unit: "A-101", startDate: "2023-01-15", endDate: "2026-01-15", status: "Active" },
+  { id: "C1002", tenantId: "T002", tenantName: "Siti Aminah", unit: "B-205", startDate: "2023-05-20", endDate: "2026-05-20", status: "Active" },
+  { id: "C1003", tenantId: "T003", tenantName: "Andi Wijaya", unit: "A-201", startDate: "2024-02-10", endDate: "2027-02-10", status: "Active" },
+  { id: "C1004", tenantId: "T004", tenantName: "Reza Rahadian", unit: "A-105", startDate: "2022-11-01", endDate: "2023-11-01", status: "Expired" },
+  { id: "C1005", tenantId: "T005", tenantName: "Diana Putri", unit: "A-102", startDate: "2023-08-05", endDate: "2026-08-10", status: "Expiring Soon" },
+];
+
+export const mockBilling = [
+  { id: "INV-2026-08-01", tenantName: "Budi Santoso", unit: "A-101", type: "Rent", amount: "Rp 2.500.000", dueDate: "2026-08-05", status: "Paid" },
+  { id: "INV-2026-08-02", tenantName: "Siti Aminah", unit: "B-205", type: "Rent + Utility", amount: "Rp 3.800.000", dueDate: "2026-08-05", status: "Pending" },
+  { id: "INV-2026-08-03", tenantName: "Andi Wijaya", unit: "A-201", type: "Rent", amount: "Rp 5.200.000", dueDate: "2026-08-05", status: "Paid" },
+  { id: "INV-2026-07-04", tenantName: "Diana Putri", unit: "A-102", type: "Utility", amount: "Rp 450.000", dueDate: "2026-07-25", status: "Overdue" },
+];
+
+export const mockMaintenance = [
+  { id: "MT-001", unit: "A-102", reportedBy: "Diana Putri", issue: "AC Leaking", priority: "High", status: "In Progress", date: "2026-08-01" },
+  { id: "MT-002", unit: "B-205", reportedBy: "Siti Aminah", issue: "Broken Door Lock", priority: "Medium", status: "New", date: "2026-08-02" },
+  { id: "MT-003", unit: "A-101", reportedBy: "Budi Santoso", issue: "Burnt Lightbulb", priority: "Low", status: "Resolved", date: "2026-07-28" },
+];
