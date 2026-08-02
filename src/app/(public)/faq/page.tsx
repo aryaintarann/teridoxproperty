@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useState } from "react";
 import { MaterialIcon } from "@/components/ui/material-icon";
+import { ScrollReveal } from "@/components/ui/ScrollReveal";
 
 export default function FAQPage() {
   const [activeCategory, setActiveCategory] = useState("booking");
@@ -100,7 +101,8 @@ export default function FAQPage() {
       </section>
 
       {/* FAQ Content & Search */}
-      <section className="py-16 max-w-7xl mx-auto px-4 md:px-12">
+      <section className="py-16 max-w-7xl mx-auto px-4 md:px-12 overflow-hidden">
+        <ScrollReveal direction="up" delay={0.1}>
         <div className="mb-10 lg:hidden">
             <div className="relative">
               <MaterialIcon name="search" className="absolute left-3 top-1/2 -translate-y-1/2 text-td-outline" />
@@ -206,10 +208,12 @@ export default function FAQPage() {
             )}
           </div>
         </div>
+        </ScrollReveal>
       </section>
 
       {/* CTA Section */}
-      <section className="bg-td-surface-container py-16">
+      <section className="bg-td-surface-container py-16 overflow-hidden">
+        <ScrollReveal direction="up" delay={0.2}>
         <div className="max-w-4xl mx-auto px-4 md:px-12 text-center">
           <div className="inline-flex items-center justify-center p-6 rounded-full bg-td-primary mb-6 shadow-md">
             <MaterialIcon name="support_agent" className="text-[40px] text-td-on-primary" />
@@ -227,6 +231,7 @@ export default function FAQPage() {
             </Link>
           </div>
         </div>
+        </ScrollReveal>
       </section>
     </div>
   );

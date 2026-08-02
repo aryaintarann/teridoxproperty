@@ -4,6 +4,7 @@ import { MaterialIcon } from "@/components/ui/material-icon";
 import { aboutImages } from "@/lib/mock-data";
 import { SplitText } from "@/components/ui/SplitText";
 import { BlurText } from "@/components/ui/BlurText";
+import { ScrollReveal } from "@/components/ui/ScrollReveal";
 
 export const metadata = {
   title: "Tentang Kami | Teridox Property",
@@ -29,7 +30,8 @@ export default function AboutPage() {
       </section>
 
       {/* Our Story */}
-      <section className="py-16 px-4 md:px-12 max-w-7xl mx-auto">
+      <section className="py-16 px-4 md:px-12 max-w-7xl mx-auto overflow-hidden">
+        <ScrollReveal direction="up">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 items-center">
           <div className="lg:col-span-7">
             <span className="text-xs font-semibold tracking-[0.2em] text-td-primary uppercase mb-2 block">Profesionalisme Utama</span>
@@ -58,10 +60,12 @@ export default function AboutPage() {
             <div className="absolute -bottom-2 -left-2 w-24 h-24 bg-td-primary-container -z-10 rounded-lg" />
           </div>
         </div>
+        </ScrollReveal>
       </section>
 
       {/* Vision & Mission */}
-      <section className="bg-td-surface-container-low py-16 px-4 md:px-12">
+      <section className="bg-td-surface-container-low py-16 px-4 md:px-12 overflow-hidden">
+        <ScrollReveal direction="up" delay={0.2}>
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
             <h2 className="font-heading text-3xl font-bold text-td-primary">
@@ -86,10 +90,12 @@ export default function AboutPage() {
             </div>
           </div>
         </div>
+        </ScrollReveal>
       </section>
 
       {/* Service Excellence */}
-      <section className="py-16 px-4 md:px-12 max-w-7xl mx-auto">
+      <section className="py-16 px-4 md:px-12 max-w-7xl mx-auto overflow-hidden">
+        <ScrollReveal direction="up" delay={0.2}>
         <div className="flex flex-col md:flex-row justify-between items-end mb-16 gap-6">
           <div className="max-w-xl">
             <h2 className="font-heading text-2xl font-semibold text-td-primary">Keunggulan Layanan</h2>
@@ -129,10 +135,12 @@ export default function AboutPage() {
             <p className="text-td-on-surface-variant mb-6">Tim kami terdiri dari para veteran industri dari perhotelan, teknik sipil, dan pengembangan perangkat lunak. Pendekatan multidisiplin ini memungkinkan kami mengelola properti dengan perpaduan unik antara presisi struktural dan layanan berorientasi pelanggan.</p>
           </div>
         </div>
+        </ScrollReveal>
       </section>
 
       {/* CTA */}
-      <section className="py-16 bg-td-primary text-white text-center">
+      <section className="py-16 bg-td-primary text-white text-center overflow-hidden">
+        <ScrollReveal direction="up" delay={0.1}>
         <div className="max-w-3xl mx-auto px-4">
           <h2 className="font-heading text-2xl font-semibold mb-6">Siap merasakan hunian yang lebih baik?</h2>
           <p className="mb-10 opacity-80">Jelajahi listing yang kami kelola dan temukan rumah modern Anda berikutnya bersama Teridox Property.</p>
@@ -141,6 +149,7 @@ export default function AboutPage() {
             <Link href="/contact" className="border border-white text-white text-xs font-semibold tracking-wider uppercase px-10 py-3 rounded-lg hover:bg-white/10 transition-all">Hubungi Agen</Link>
           </div>
         </div>
+        </ScrollReveal>
       </section>
     </>
   );

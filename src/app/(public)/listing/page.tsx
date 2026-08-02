@@ -6,6 +6,7 @@ import { MaterialIcon } from "@/components/ui/material-icon";
 import { availableUnits } from "@/lib/mock-data";
 import { gooeyToast } from "goey-toast";
 import { useState, useEffect } from "react";
+import { ScrollReveal } from "@/components/ui/ScrollReveal";
 
 export default function ListingPage() {
   const [isGridLoading, setIsGridLoading] = useState(true);
@@ -18,11 +19,14 @@ export default function ListingPage() {
   return (
     <div className="max-w-7xl mx-auto px-4 md:px-12 py-10">
       {/* Page Header */}
+      <ScrollReveal direction="down">
       <div className="mb-10">
         <h1 className="font-heading text-[32px] md:text-[48px] leading-tight font-bold text-td-primary mb-2">Unit Tersedia</h1>
         <p className="text-td-on-surface-variant max-w-2xl text-lg">Temukan ruang tinggal sempurna Anda dari daftar properti yang dikurasi. Lokasi premium, listing terverifikasi, dan pemesanan mudah.</p>
       </div>
+      </ScrollReveal>
 
+      <ScrollReveal direction="up" delay={0.2}>
       <div className="flex flex-col lg:flex-row gap-6">
         {/* Filter Sidebar */}
         <aside className="w-full lg:w-72 shrink-0">
@@ -175,6 +179,7 @@ export default function ListingPage() {
           </div>
         </div>
       </div>
+      </ScrollReveal>
     </div>
   );
 }

@@ -8,6 +8,7 @@ import { heroImage, availableUnits } from "@/lib/mock-data";
 import { SplitText } from "@/components/ui/SplitText";
 import { BlurText } from "@/components/ui/BlurText";
 import { gooeyToast } from "goey-toast";
+import { ScrollReveal } from "@/components/ui/ScrollReveal";
 
 export default function HomePage() {
   const featuredUnits = availableUnits.slice(0, 3);
@@ -78,7 +79,8 @@ export default function HomePage() {
       </section>
 
       {/* Featured Listings */}
-      <section className="py-16 px-4 md:px-12 max-w-7xl mx-auto">
+      <section className="py-16 px-4 md:px-12 max-w-7xl mx-auto overflow-hidden">
+        <ScrollReveal direction="up">
         <div className="flex justify-between items-end mb-10">
           <div>
             <h2 className="font-heading text-2xl font-semibold text-td-primary">
@@ -173,10 +175,12 @@ export default function HomePage() {
             ))}
           </div>
         </phantom-ui>
+        </ScrollReveal>
       </section>
 
       {/* Why Choose Us */}
-      <section className="bg-td-surface-container-low py-16 px-4 md:px-12">
+      <section className="bg-td-surface-container-low py-16 px-4 md:px-12 overflow-hidden">
+        <ScrollReveal direction="up" delay={0.2}>
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
             <h2 className="font-heading text-2xl font-semibold text-td-primary mb-2">
@@ -225,11 +229,13 @@ export default function HomePage() {
             ))}
           </div>
         </div>
+        </ScrollReveal>
       </section>
 
       {/* CTA Section */}
-      <section className="py-16 px-4 md:px-12">
-        <div className="max-w-4xl mx-auto bg-td-primary text-white rounded-full py-16 px-10 text-center shadow-xl">
+      <section className="py-16 px-4 md:px-12 overflow-hidden">
+        <ScrollReveal direction="up" delay={0.1}>
+        <div className="max-w-4xl mx-auto bg-td-primary text-white rounded-3xl py-16 px-10 text-center shadow-xl">
           <h2 className="font-heading text-2xl font-semibold mb-4">
             Siap Menemukan Rumah Baru Anda?
           </h2>
@@ -252,6 +258,7 @@ export default function HomePage() {
             </Link>
           </div>
         </div>
+        </ScrollReveal>
       </section>
     </>
   );

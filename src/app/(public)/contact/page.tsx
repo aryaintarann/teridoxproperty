@@ -7,6 +7,7 @@ import { SplitText } from "@/components/ui/SplitText";
 import { BlurText } from "@/components/ui/BlurText";
 import { gooeyToast } from "goey-toast";
 import { contactImages } from "@/lib/mock-data";
+import { ScrollReveal } from "@/components/ui/ScrollReveal";
 
 export default function ContactPage() {
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -50,7 +51,8 @@ export default function ContactPage() {
       </section>
 
       {/* Main Content Grid */}
-      <section className="max-w-7xl mx-auto px-4 md:px-12 py-16">
+      <section className="max-w-7xl mx-auto px-4 md:px-12 py-16 overflow-hidden">
+        <ScrollReveal direction="up" delay={0.1}>
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-16">
           {/* Contact Form Section */}
           <div className="lg:col-span-7">
@@ -161,10 +163,12 @@ export default function ContactPage() {
             </div>
           </div>
         </div>
+        </ScrollReveal>
       </section>
 
       {/* Quick FAQ Mini-Section */}
-      <section className="bg-td-surface-container-low py-16">
+      <section className="bg-td-surface-container-low py-16 overflow-hidden">
+        <ScrollReveal direction="up" delay={0.2}>
         <div className="max-w-7xl mx-auto px-4 md:px-12">
           <div className="text-center mb-10">
             <h2 className="font-heading text-2xl font-semibold text-td-primary">Pertanyaan Umum</h2>
@@ -180,6 +184,7 @@ export default function ContactPage() {
             </div>
           </div>
         </div>
+        </ScrollReveal>
       </section>
     </div>
   );

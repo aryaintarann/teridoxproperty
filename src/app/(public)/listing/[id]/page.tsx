@@ -9,6 +9,7 @@ import { notFound } from "next/navigation";
 import { SplitText } from "@/components/ui/SplitText";
 import { BlurText } from "@/components/ui/BlurText";
 import { gooeyToast } from "goey-toast";
+import { ScrollReveal } from "@/components/ui/ScrollReveal";
 
 export default function UnitDetailPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = use(params);
@@ -26,8 +27,9 @@ export default function UnitDetailPage({ params }: { params: Promise<{ id: strin
   const relatedUnits = availableUnits.filter((u) => u.id !== unit.id).slice(0, 3);
 
   return (
-    <div className="max-w-7xl mx-auto px-4 md:px-12 py-6 lg:py-10">
+    <div className="max-w-7xl mx-auto px-4 md:px-12 py-6 lg:py-10 overflow-hidden">
       {/* Image Gallery (Bento) */}
+      <ScrollReveal direction="down">
       <phantom-ui loading={isGalleryLoading} animation="wave" reveal={0.4}>
         <section className="grid grid-cols-1 md:grid-cols-4 md:grid-rows-2 gap-2 h-[300px] md:h-[550px] mb-10 rounded-xl overflow-hidden shadow-sm border border-td-outline-variant bg-td-surface-container-lowest">
           <div className="md:col-span-2 md:row-span-2 relative group overflow-hidden">
@@ -47,11 +49,13 @@ export default function UnitDetailPage({ params }: { params: Promise<{ id: strin
           )}
         </section>
       </phantom-ui>
+      </ScrollReveal>
 
       {/* Main Layout */}
       <div className="flex flex-col lg:flex-row gap-10">
         {/* Left: Details */}
         <div className="flex-1 space-y-10">
+          <ScrollReveal direction="up" delay={0.1}>
           {/* Title */}
           <div className="mb-8 border-b border-td-outline-variant pb-8">
             <div className="flex justify-between items-start mb-4">
@@ -130,10 +134,12 @@ export default function UnitDetailPage({ params }: { params: Promise<{ id: strin
               </div>
             </div>
           </section>
+          </ScrollReveal>
         </div>
 
         {/* Right: Booking Sidebar */}
         <aside className="w-full lg:w-[400px]">
+          <ScrollReveal direction="left" delay={0.2}>
           <div className="sticky top-28 p-6 bg-white border border-td-outline-variant shadow-lg rounded-xl">
             <div className="flex justify-between items-start mb-6">
               <div>
@@ -183,11 +189,13 @@ export default function UnitDetailPage({ params }: { params: Promise<{ id: strin
               </div>
             )}
           </div>
+          </ScrollReveal>
         </aside>
       </div>
 
       {/* Related Listings */}
       <section className="mt-16 pt-10 border-t border-td-outline-variant">
+        <ScrollReveal direction="up" delay={0.2}>
         <div className="flex justify-between items-end mb-10">
           <div>
             <h2 className="font-heading text-2xl font-semibold text-td-on-surface">Listing Serupa</h2>
@@ -214,6 +222,7 @@ export default function UnitDetailPage({ params }: { params: Promise<{ id: strin
             </Link>
           ))}
         </div>
+        </ScrollReveal>
       </section>
     </div>
   );
