@@ -10,7 +10,7 @@ interface SplitTextProps {
 }
 
 export function SplitText({ text, className = "", delay = 0, duration = 0.5 }: SplitTextProps) {
-  const characters = text.split("");
+  const characters = (text || "").split("");
 
   return (
     <span className={`inline-block overflow-hidden ${className}`}>

@@ -124,7 +124,7 @@ export default function ListingPage() {
                 <div key={unit.id} className="relative bg-white rounded-xl border border-td-outline-variant overflow-hidden group hover:shadow-lg transition-all duration-300 flex flex-col">
                   <Link href={`/listing/${unit.id}`} className="absolute inset-0 z-0" aria-label={`Lihat detail ${unit.name}`} />
                   <div className="relative h-56 overflow-hidden pointer-events-none">
-                    <Image src={unit.images[0]} alt={unit.name} fill sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw" className="object-cover group-hover:scale-105 transition-transform duration-500" />
+                    <Image src={(unit.images && unit.images[0]) || "https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?q=80&w=800&auto=format&fit=crop"} alt={unit.name} fill sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw" className="object-cover group-hover:scale-105 transition-transform duration-500" />
                     <div className={`absolute top-4 left-4 px-3 py-1 rounded-full text-xs font-semibold tracking-wider ${
                       unit.status === "Tersedia" ? "bg-td-tertiary text-td-on-tertiary" : "bg-td-secondary text-td-on-secondary"
                     }`}>
@@ -145,11 +145,11 @@ export default function ListingPage() {
                     <p className="text-sm text-td-on-surface-variant mb-4 flex items-center gap-1">
                       <MaterialIcon name="location_on" className="text-sm" /> {unit.location}
                     </p>
-                    <div className="flex gap-2 mb-4">
-                      {unit.amenities.slice(0, 3).map((a) => (
-                        <span key={a.icon} className="bg-td-surface-container px-2 py-1 rounded text-[10px] font-semibold tracking-wider text-td-on-surface-variant flex items-center gap-1">
-                          <MaterialIcon name={a.icon} className="text-xs" /> {a.label.toUpperCase()}
-                        </span>
+                    <div className="flex flex-wrap gap-2 mb-4 pointer-events-none">
+                      {(unit.amenities || []).slice(0, 3).map((a) => (
+                        <div key={a.icon} className="flex items-center text-xs text-td-on-surface-variant bg-td-surface-container px-2 py-1 rounded">
+                          <MaterialIcon name={a.icon} className="text-[14px] mr-1" /> {a.label}
+                        </div>
                       ))}
                     </div>
                     <div className="mt-auto pt-4 border-t border-td-outline-variant flex items-center gap-3">

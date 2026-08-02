@@ -71,7 +71,7 @@ export async function getMaintenance() {
 export async function addUnit(unitData: Omit<Unit, 'id'>) {
   const { data, error } = await supabase.from('units').insert([unitData]).select()
   if (error) {
-    console.error('Error adding unit:', error)
+    console.error('Error adding unit:', JSON.stringify(error, null, 2), error)
     throw error
   }
   return data

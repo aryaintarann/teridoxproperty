@@ -145,7 +145,7 @@ export default function HomePage() {
                     <div className="relative h-72 overflow-hidden p-3">
                         <div className="relative w-full h-full rounded-[1.5rem] overflow-hidden">
                           <Image
-                          src={unit.images[0]}
+                          src={(unit.images && unit.images[0]) || "https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?q=80&w=800&auto=format&fit=crop"}
                           alt={unit.name}
                           fill
                           sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
@@ -186,7 +186,7 @@ export default function HomePage() {
                     </div>
 
                     <div className="flex flex-wrap gap-2 pt-4 border-t border-border/60">
-                      {unit.amenities.slice(0, 3).map((a) => (
+                      {(unit.amenities || []).slice(0, 3).map((a) => (
                           <div
                           key={a.icon}
                           className="flex items-center bg-secondary/50 px-3 py-1.5 rounded-lg text-secondary-foreground text-xs font-bold"

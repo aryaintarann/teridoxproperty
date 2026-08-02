@@ -43,17 +43,21 @@ export default function UnitDetailPage({ params }: { params: Promise<{ id: strin
       {/* Image Gallery (Bento) */}
       <ScrollReveal direction="down">
       <phantom-ui loading={isGalleryLoading} animation="wave" reveal={0.4}>
-        <section className="grid grid-cols-1 md:grid-cols-4 md:grid-rows-2 gap-2 h-[300px] md:h-[550px] mb-10 rounded-xl overflow-hidden shadow-sm border border-td-outline-variant bg-td-surface-container-lowest">
-          <div className="md:col-span-2 md:row-span-2 relative group overflow-hidden">
-            <Image src={unit.images[0]} alt={unit.name} fill sizes="(max-width: 768px) 100vw, 50vw" className="object-cover transition-transform duration-700 group-hover:scale-105" priority />
-            <div className="absolute inset-0 bg-black/10 group-hover:bg-transparent transition-all pointer-events-none" />
+        <section className="relative w-full h-[40vh] md:h-[60vh] md:grid md:grid-cols-4 md:grid-rows-2 gap-2 overflow-hidden rounded-3xl">
+          <div className="relative col-span-2 row-span-2 w-full h-full group overflow-hidden">
+            <Image src={(unit.images && unit.images[0]) || "https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?q=80&w=800&auto=format&fit=crop"} alt={unit.name} fill sizes="(max-width: 768px) 100vw, 50vw" className="object-cover transition-transform duration-700 group-hover:scale-105" priority />
+            <div className={`absolute top-6 left-6 px-4 py-1.5 rounded-full text-sm font-bold tracking-widest uppercase shadow-md backdrop-blur-md border ${
+              unit.status === "Tersedia" ? "bg-td-tertiary/90 text-td-on-tertiary border-td-tertiary/20" : "bg-td-secondary/90 text-td-on-secondary border-td-secondary/20"
+            }`}>
+              {unit.status}
+            </div>
           </div>
-          {unit.images.slice(1, 5).map((img, i) => (
+          {(unit.images || []).slice(1, 5).map((img, i) => (
             <div key={i} className="hidden md:block relative group overflow-hidden">
               <Image src={img} alt={`${unit.name} foto ${i + 2}`} fill sizes="25vw" className="object-cover transition-transform duration-700 group-hover:scale-105" />
             </div>
           ))}
-          {unit.images.length <= 4 && (
+          {(unit.images || []).length <= 4 && (
             <div className="hidden md:flex relative bg-td-surface-container flex-col items-center justify-center text-td-on-surface-variant group hover:bg-td-surface-container-high transition-colors cursor-pointer">
               <MaterialIcon name="collections" className="text-3xl mb-2 opacity-50 group-hover:opacity-100 transition-opacity" />
               <span className="text-xs font-semibold tracking-wider">LIHAT SEMUA</span>
@@ -98,17 +102,15 @@ export default function UnitDetailPage({ params }: { params: Promise<{ id: strin
           <section className="border-t border-td-outline-variant pt-10">
             <h2 className="font-heading text-xl font-semibold text-td-on-surface mb-6">Fitur & Fasilitas</h2>
             <div className="grid grid-cols-2 md:grid-cols-3 gap-6">
-              {[
-                ...unit.amenities,
-                { icon: "cleaning_services", label: "Kebersihan Mingguan" },
-                { icon: "key", label: "Akses Pintar 24 Jam" },
-                { icon: "local_parking", label: "Area Parkir" },
-              ].map((a) => (
-                <div key={a.icon} className="flex items-center gap-4 p-4 bg-td-surface-container-low rounded-lg">
-                  <MaterialIcon name={a.icon} className="text-td-primary bg-white p-2 rounded shadow-sm" />
-                  <span className="text-sm font-semibold">{a.label}</span>
+              {(unit.amenities || []).map((amenity, i) => (
+                <div key={i} className="flex items-center gap-3 text-td-on-surface-variant">
+                  <MaterialIcon name={amenity.icon} className="text-td-primary" />
+                  <span className="font-medium text-sm">{amenity.label}</span>
                 </div>
               ))}
+              {(!unit.amenities || unit.amenities.length === 0) && (
+                <div className="text-td-on-surface-variant col-span-full">Fasilitas tidak tersedia.</div>
+              )}
             </div>
           </section>
 
@@ -183,23 +185,20 @@ export default function UnitDetailPage({ params }: { params: Promise<{ id: strin
               </button>
             </div>
 
-            {/* Agent */}
-            {unit.agent && (
-              <div className="mt-10 pt-6 border-t border-td-outline-variant">
-                <div className="flex items-center gap-4">
-                  <div className="w-12 h-12 rounded-full overflow-hidden border border-td-outline-variant relative">
-                    <Image src={unit.agent.photo} alt={unit.agent.name} fill sizes="48px" className="object-cover" />
-                  </div>
-                  <div>
-                    <p className="font-semibold text-td-on-surface">{unit.agent.name}</p>
-                    <p className="text-sm text-td-on-surface-variant">{unit.agent.title} • {unit.agent.rating} ★</p>
-                  </div>
-                </div>
-                <button className="w-full text-center mt-4 text-td-primary text-xs font-semibold tracking-wider flex items-center justify-center gap-2">
-                  <MaterialIcon name="chat" className="text-lg" /> Chat dengan Manajer Properti
-                </button>
+            {/* Agent Info */}
+          <div className="mt-8 border border-td-outline-variant rounded-3xl p-6 bg-td-surface-container-low flex items-center gap-4">
+            <div className="relative w-16 h-16 rounded-full overflow-hidden shrink-0">
+              <Image src={(unit.agent && unit.agent.photo) || "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=200&auto=format&fit=crop"} alt={(unit.agent && unit.agent.name) || "Agen Properti"} fill className="object-cover" />
+            </div>
+            <div>
+              <h4 className="font-bold text-td-on-surface text-lg">{(unit.agent && unit.agent.name) || "Agen Internal"}</h4>
+              <p className="text-td-on-surface-variant text-sm mb-1">{(unit.agent && unit.agent.title) || "Agen Utama"}</p>
+              <div className="flex items-center gap-1 text-sm font-semibold text-td-primary">
+                <MaterialIcon name="star" className="text-base text-amber-400" />
+                {(unit.agent && unit.agent.rating) || 5.0}
               </div>
-            )}
+          </div>
+          </div>
           </div>
           </ScrollReveal>
         </aside>
@@ -218,17 +217,17 @@ export default function UnitDetailPage({ params }: { params: Promise<{ id: strin
           </Link>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {relatedUnits.map((ru) => (
-            <Link href={`/listing/${ru.id}`} key={ru.id} className="group bg-white border border-td-outline-variant rounded-xl overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300">
+          {relatedUnits.map((u) => (
+            <Link href={`/listing/${u.id}`} key={u.id} className="group bg-white border border-td-outline-variant rounded-xl overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300">
               <div className="h-48 overflow-hidden relative">
-                <Image src={ru.images[0]} alt={ru.name} fill sizes="(max-width: 768px) 100vw, 33vw" className="object-cover group-hover:scale-110 transition-transform duration-500" />
-                <div className="absolute top-4 right-4 bg-white/90 backdrop-blur px-4 py-1 rounded-full text-[10px] font-semibold text-td-primary">{ru.price}/bln</div>
+                <Image src={(u.images && u.images[0]) || "https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?q=80&w=800&auto=format&fit=crop"} alt={u.name} fill sizes="33vw" className="object-cover group-hover:scale-105 transition-transform duration-500" />
+                <div className="absolute top-4 right-4 bg-white/90 backdrop-blur px-4 py-1 rounded-full text-[10px] font-semibold text-td-primary">{u.price}/bln</div>
               </div>
               <div className="p-6">
-                <h4 className="font-heading text-lg text-td-on-surface mb-1">{ru.name}</h4>
-                <p className="text-td-on-surface-variant text-sm mb-4">{ru.location} • {ru.type} • {ru.sqft}</p>
+                <h4 className="font-heading text-lg text-td-on-surface mb-1">{u.name}</h4>
+                <p className="text-td-on-surface-variant text-sm mb-4">{u.location} • {u.type} • {u.sqft}</p>
                 <div className="flex items-center gap-2 text-td-tertiary text-xs font-semibold tracking-wider">
-                  <MaterialIcon name="check_circle" className="text-lg" /> {ru.status === "Tersedia" ? "Persetujuan Instan" : ru.status}
+                  <MaterialIcon name="check_circle" className="text-lg" /> {u.status === "Tersedia" ? "Persetujuan Instan" : u.status}
                 </div>
               </div>
             </Link>

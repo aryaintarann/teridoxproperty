@@ -10,7 +10,7 @@ interface BlurTextProps {
 }
 
 export function BlurText({ text, className = "", delay = 0, duration = 0.8 }: BlurTextProps) {
-  const words = text.split(" ");
+  const words = (text || "").split(" ");
 
   return (
     <span className={`inline-flex flex-wrap gap-1 ${className}`}>
