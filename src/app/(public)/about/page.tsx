@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { MaterialIcon } from "@/components/ui/material-icon";
-import { aboutImages } from "@/lib/mock-data";
+import { aboutImages } from "@/lib/constants";
 import { SplitText } from "@/components/ui/SplitText";
 import { BlurText } from "@/components/ui/BlurText";
 import { ScrollReveal } from "@/components/ui/ScrollReveal";

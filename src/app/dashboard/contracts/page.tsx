@@ -1,12 +1,18 @@
 "use client";
 
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
-import { mockContracts } from "@/lib/mock-data";
+import { getContracts } from "@/lib/api";
 import { Button } from "@/components/ui/button";
 import { MaterialIcon } from "@/components/ui/material-icon";
 import { gooeyToast } from "goey-toast";
+import { useState, useEffect } from "react";
 
 export default function ContractsPage() {
+  const [mockContracts, setMockContracts] = useState<any[]>([]);
+
+  useEffect(() => {
+    getContracts().then(setMockContracts);
+  }, []);
   return (
     <div className="space-y-8 animate-in fade-in duration-500">
       <div className="flex justify-between items-center">

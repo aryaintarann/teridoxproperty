@@ -3,17 +3,23 @@
 import Image from "next/image";
 import Link from "next/link";
 import { MaterialIcon } from "@/components/ui/material-icon";
-import { availableUnits } from "@/lib/mock-data";
+import { getUnits } from "@/lib/api";
 import { gooeyToast } from "goey-toast";
 import { useState, useEffect } from "react";
 import { ScrollReveal } from "@/components/ui/ScrollReveal";
+import type { Unit } from "@/types/unit";
 
 export default function ListingPage() {
+  const [availableUnits, setAvailableUnits] = useState<Unit[]>([]);
   const [isGridLoading, setIsGridLoading] = useState(true);
 
   useEffect(() => {
-    const timer = setTimeout(() => setIsGridLoading(false), 800);
-    return () => clearTimeout(timer);
+    async function loadData() {
+      const data = await getUnits();
+      setAvailableUnits(data);
+      setIsGridLoading(false);
+    }
+    loadData();
   }, []);
 
   return (

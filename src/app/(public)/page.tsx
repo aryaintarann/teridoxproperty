@@ -4,15 +4,17 @@ import Image from "next/image";
 import Link from "next/link";
 import { useState, useEffect, useRef } from "react";
 import { MaterialIcon } from "@/components/ui/material-icon";
-import { heroImage, availableUnits } from "@/lib/mock-data";
+import { heroImage } from "@/lib/constants";
+import { getFeaturedUnits } from "@/lib/api";
 import { SplitText } from "@/components/ui/SplitText";
 import { BlurText } from "@/components/ui/BlurText";
 import { gooeyToast } from "goey-toast";
 import { ScrollReveal } from "@/components/ui/ScrollReveal";
 import { motion } from "framer-motion";
+import type { Unit } from "@/types/unit";
 
 export default function HomePage() {
-  const featuredUnits = availableUnits.slice(0, 3);
+  const [featuredUnits, setFeaturedUnits] = useState<Unit[]>([]);
   const [isGridLoading, setIsGridLoading] = useState(true);
   const ctaRef = useRef<HTMLDivElement>(null);
 
@@ -26,8 +28,12 @@ export default function HomePage() {
   };
 
   useEffect(() => {
-    const timer = setTimeout(() => setIsGridLoading(false), 1200);
-    return () => clearTimeout(timer);
+    async function loadData() {
+      const data = await getFeaturedUnits();
+      setFeaturedUnits(data);
+      setIsGridLoading(false);
+    }
+    loadData();
   }, []);
 
   return (

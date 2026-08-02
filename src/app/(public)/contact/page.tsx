@@ -6,7 +6,7 @@ import { MaterialIcon } from "@/components/ui/material-icon";
 import { SplitText } from "@/components/ui/SplitText";
 import { BlurText } from "@/components/ui/BlurText";
 import { gooeyToast } from "goey-toast";
-import { contactImages } from "@/lib/mock-data";
+import { contactImages } from "@/lib/constants";
 import { ScrollReveal } from "@/components/ui/ScrollReveal";
 
 export default function ContactPage() {

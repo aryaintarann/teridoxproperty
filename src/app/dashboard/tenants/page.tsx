@@ -1,15 +1,20 @@
 "use client";
 
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
-import { mockTenants } from "@/lib/mock-data";
+import { getTenants } from "@/lib/api";
 import { Button } from "@/components/ui/button";
 import { MaterialIcon } from "@/components/ui/material-icon";
 import { gooeyToast } from "goey-toast";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Input } from "@/components/ui/input";
 
 export default function TenantsPage() {
   const [searchQuery, setSearchQuery] = useState("");
+  const [mockTenants, setMockTenants] = useState<any[]>([]);
+
+  useEffect(() => {
+    getTenants().then(setMockTenants);
+  }, []);
 
   const filteredTenants = mockTenants.filter(tenant => 
     tenant.name.toLowerCase().includes(searchQuery.toLowerCase()) ||

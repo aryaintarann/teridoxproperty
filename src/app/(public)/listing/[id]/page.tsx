@@ -4,27 +4,39 @@ import Image from "next/image";
 import Link from "next/link";
 import { useState, useEffect, use } from "react";
 import { MaterialIcon } from "@/components/ui/material-icon";
-import { availableUnits } from "@/lib/mock-data";
+import { getUnitById } from "@/lib/api";
 import { notFound } from "next/navigation";
 import { SplitText } from "@/components/ui/SplitText";
 import { BlurText } from "@/components/ui/BlurText";
 import { gooeyToast } from "goey-toast";
 import { ScrollReveal } from "@/components/ui/ScrollReveal";
+import type { Unit } from "@/types/unit";
 
 export default function UnitDetailPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = use(params);
-  const unit = availableUnits.find((u) => u.id.toString() === id);
+  const [unit, setUnit] = useState<Unit | null>(null);
+  const [relatedUnits, setRelatedUnits] = useState<Unit[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
   
   const [isGalleryLoading, setIsGalleryLoading] = useState(true);
   
   useEffect(() => {
-    const timer = setTimeout(() => setIsGalleryLoading(false), 600);
-    return () => clearTimeout(timer);
-  }, []);
+    async function loadData() {
+      const data = await getUnitById(id);
+      setUnit(data);
+      
+      const { getUnits } = await import('@/lib/api');
+      const allUnits = await getUnits();
+      setRelatedUnits(allUnits.filter(u => u.id.toString() !== id).slice(0, 3));
+      
+      setIsLoading(false);
+      setTimeout(() => setIsGalleryLoading(false), 600);
+    }
+    loadData();
+  }, [id]);
 
+  if (isLoading) return <div className="min-h-screen flex items-center justify-center">Loading...</div>;
   if (!unit) return notFound();
-
-  const relatedUnits = availableUnits.filter((u) => u.id !== unit.id).slice(0, 3);
 
   return (
     <div className="max-w-7xl mx-auto px-4 md:px-12 py-6 lg:py-10 overflow-hidden">
