@@ -12,26 +12,38 @@ import { gooeyToast } from "goey-toast";
 import { useRouter } from "next/navigation";
 import { SplitText } from "@/components/ui/SplitText";
 import { motion } from "framer-motion";
+import { authenticateUser } from "@/lib/api";
 
 export default function LoginPage() {
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
 
-  const handleLogin = (e: React.FormEvent, role: 'admin' | 'tenant') => {
+  const handleLogin = async (e: React.FormEvent<HTMLFormElement>, role: 'admin' | 'tenant') => {
     e.preventDefault();
     setIsLoading(true);
+    
+    const formData = new FormData(e.currentTarget);
+    const email = formData.get("email") as string;
+    const password = formData.get("password") as string;
 
-    // Mock login delay
-    setTimeout(() => {
-      setIsLoading(false);
-      gooeyToast.success(`Berhasil login sebagai ${role === 'admin' ? 'Admin' : 'Penghuni'}`);
+    try {
+      const user = await authenticateUser(email, password);
       
-      if (role === 'admin') {
+      // Save session in localStorage
+      localStorage.setItem("teridox_session", JSON.stringify(user));
+      
+      gooeyToast.success(`Berhasil login sebagai ${user.name}`);
+      
+      if (user.role === 'admin') {
         router.push('/dashboard');
       } else {
-        router.push('/dashboard'); // Tenant portal not implemented yet, just redirect to dashboard for now
+        router.push('/dashboard');
       }
-    }, 1500);
+    } catch (error) {
+      gooeyToast.error("Email atau password tidak valid");
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -95,6 +107,7 @@ export default function LoginPage() {
                     <Label htmlFor="email-tenant" className="text-xs font-bold tracking-widest text-muted-foreground">EMAIL</Label>
                     <Input 
                       id="email-tenant" 
+                      name="email"
                       type="email" 
                       placeholder="nama@email.com" 
                       required 
@@ -108,6 +121,7 @@ export default function LoginPage() {
                     </div>
                     <Input 
                       id="password-tenant" 
+                      name="password"
                       type="password" 
                       required 
                       className="h-12 bg-background/50 border-border/50 focus-visible:ring-primary/30 focus-visible:border-primary rounded-xl"
@@ -134,6 +148,7 @@ export default function LoginPage() {
                     <Label htmlFor="email-admin" className="text-xs font-bold tracking-widest text-muted-foreground">EMAIL ADMIN</Label>
                     <Input 
                       id="email-admin" 
+                      name="email"
                       type="email" 
                       placeholder="admin@teridox.com" 
                       required 
@@ -144,6 +159,7 @@ export default function LoginPage() {
                     <Label htmlFor="password-admin" className="text-xs font-bold tracking-widest text-muted-foreground">PASSWORD</Label>
                     <Input 
                       id="password-admin" 
+                      name="password"
                       type="password" 
                       required 
                       className="h-12 bg-background/50 border-border/50 focus-visible:ring-primary/30 focus-visible:border-primary rounded-xl"

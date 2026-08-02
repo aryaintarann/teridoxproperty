@@ -1,7 +1,7 @@
 "use client";
 
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
-import { getTenants, addTenant } from "@/lib/api";
+import { getTenants, addTenant, getUnits } from "@/lib/api";
 import { Button } from "@/components/ui/button";
 import { MaterialIcon } from "@/components/ui/material-icon";
 import { gooeyToast } from "goey-toast";
@@ -9,10 +9,12 @@ import { useState, useEffect } from "react";
 import { Input } from "@/components/ui/input";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger, DialogFooter } from "@/components/ui/dialog";
 import { Label } from "@/components/ui/label";
+import type { Unit } from "@/types/unit";
 
 export default function TenantsPage() {
   const [searchQuery, setSearchQuery] = useState("");
   const [mockTenants, setMockTenants] = useState<any[]>([]);
+  const [availableUnits, setAvailableUnits] = useState<Unit[]>([]);
   const [isOpen, setIsOpen] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [formData, setFormData] = useState({
@@ -20,15 +22,25 @@ export default function TenantsPage() {
     email: "",
     phone: "",
     unit: "",
+    password: "",
   });
 
-  const fetchTenants = () => {
-    getTenants().then(setMockTenants);
+  const fetchData = async () => {
+    const [tenantsData, unitsData] = await Promise.all([getTenants(), getUnits()]);
+    setMockTenants(tenantsData);
+    setAvailableUnits(unitsData);
   };
 
   useEffect(() => {
-    fetchTenants();
+    fetchData();
   }, []);
+
+  const generatePassword = () => {
+    const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$";
+    let pwd = "";
+    for(let i=0; i<10; i++) pwd += chars.charAt(Math.floor(Math.random() * chars.length));
+    setFormData({...formData, password: pwd});
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -40,6 +52,8 @@ export default function TenantsPage() {
         email: formData.email,
         phone: formData.phone,
         unit: formData.unit,
+        password: formData.password,
+        requires_password_change: true,
         status: "Active",
         joined_at: new Date().toISOString().split('T')[0],
       };
@@ -47,8 +61,8 @@ export default function TenantsPage() {
       await addTenant(newTenant);
       gooeyToast.success("Tenant added successfully!");
       setIsOpen(false);
-      fetchTenants();
-      setFormData({ name: "", email: "", phone: "", unit: "" });
+      fetchData();
+      setFormData({ name: "", email: "", phone: "", unit: "", password: "" });
     } catch (error) {
       gooeyToast.error("Failed to add tenant");
     } finally {
@@ -58,7 +72,8 @@ export default function TenantsPage() {
 
   const filteredTenants = mockTenants.filter(tenant => 
     tenant.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    tenant.unit.toLowerCase().includes(searchQuery.toLowerCase())
+    tenant.unit.toLowerCase().includes(searchQuery.toLowerCase()) ||
+    tenant.email.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
   return (
@@ -85,6 +100,14 @@ export default function TenantsPage() {
                 <Label htmlFor="email">Email</Label>
                 <Input id="email" type="email" value={formData.email} onChange={e => setFormData({...formData, email: e.target.value})} required placeholder="john@example.com" />
               </div>
+              <div className="space-y-2">
+                <Label htmlFor="password">Initial Password</Label>
+                <div className="flex gap-2">
+                  <Input id="password" type="text" value={formData.password} onChange={e => setFormData({...formData, password: e.target.value})} required placeholder="Enter or generate password" />
+                  <Button type="button" variant="outline" onClick={generatePassword}>Generate</Button>
+                </div>
+                <p className="text-xs text-muted-foreground">Tenant will be required to change this upon first login.</p>
+              </div>
               <div className="grid grid-cols-2 gap-4">
                 <div className="space-y-2">
                   <Label htmlFor="phone">Phone Number</Label>
@@ -92,7 +115,12 @@ export default function TenantsPage() {
                 </div>
                 <div className="space-y-2">
                   <Label htmlFor="unit">Assigned Unit</Label>
-                  <Input id="unit" value={formData.unit} onChange={e => setFormData({...formData, unit: e.target.value})} required placeholder="e.g. A-101" />
+                  <Input id="unit" list="units-list" value={formData.unit} onChange={e => setFormData({...formData, unit: e.target.value})} required placeholder="Search unit..." autoComplete="off" />
+                  <datalist id="units-list">
+                    {availableUnits.map(u => (
+                      <option key={u.id} value={`${u.name} - ${u.type} (${u.property})`} />
+                    ))}
+                  </datalist>
                 </div>
               </div>
               <DialogFooter className="pt-4">
@@ -138,14 +166,14 @@ export default function TenantsPage() {
                   <tr key={tenant.id} className="border-b border-border/50 hover:bg-muted/20 transition-colors">
                     <td className="px-6 py-4 font-medium text-muted-foreground">{tenant.id}</td>
                     <td className="px-6 py-4 font-bold text-foreground">{tenant.name}</td>
-                    <td className="px-6 py-4">{tenant.unit}</td>
+                    <td className="px-6 py-4 max-w-[200px] truncate" title={tenant.unit}>{tenant.unit}</td>
                     <td className="px-6 py-4">
                       <div className="flex flex-col">
                         <span>{tenant.email}</span>
                         <span className="text-xs text-muted-foreground">{tenant.phone}</span>
                       </div>
                     </td>
-                    <td className="px-6 py-4">{tenant.joinedAt}</td>
+                    <td className="px-6 py-4">{tenant.joinedAt || tenant.joined_at}</td>
                     <td className="px-6 py-4">
                       <span className={`px-2 py-1 rounded-full text-xs font-semibold tracking-wide ${tenant.status === 'Active' ? 'bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-400' : 'bg-slate-100 text-slate-700 dark:bg-slate-800 dark:text-slate-400'}`}>
                         {tenant.status}

@@ -150,3 +150,24 @@ export async function markInvoicePaid(id: string) {
   }
   return data
 }
+
+export async function authenticateUser(email: string, password: string) {
+  // Hardcoded Admin
+  if (email === 'admin@teridox.com' && password === 'admin123') {
+    return { role: 'admin', name: 'Super Admin' }
+  }
+
+  // Check tenants table
+  const { data, error } = await supabase
+    .from('tenants')
+    .select('*')
+    .eq('email', email)
+    .eq('password', password)
+    .single()
+
+  if (error || !data) {
+    throw new Error('Invalid credentials')
+  }
+
+  return { role: 'tenant', name: data.name, tenantId: data.id, requiresChange: data.requires_password_change }
+}

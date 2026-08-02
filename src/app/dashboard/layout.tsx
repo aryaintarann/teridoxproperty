@@ -1,8 +1,30 @@
+"use client";
+
 import { Building, Users, FileText, CreditCard, Settings, LogOut, LayoutDashboard, Wrench } from "lucide-react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
+import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
+import { MaterialIcon } from "@/components/ui/material-icon";
 
 export default function DashboardLayout({ children }: { children: React.ReactNode }) {
+  const router = useRouter();
+  const [user, setUser] = useState<{name: string, role: string} | null>(null);
+
+  useEffect(() => {
+    const session = localStorage.getItem("teridox_session");
+    if (!session) {
+      router.push("/login");
+    } else {
+      setUser(JSON.parse(session));
+    }
+  }, [router]);
+
+  const handleLogout = () => {
+    localStorage.removeItem("teridox_session");
+    router.push("/login");
+  };
+
   const navItems = [
     { name: "Dashboard", href: "/dashboard", icon: LayoutDashboard },
     { name: "Properties & Units", href: "/dashboard/properties", icon: Building },
@@ -11,6 +33,14 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
     { name: "Billing", href: "/dashboard/billing", icon: CreditCard },
     { name: "Maintenance", href: "/dashboard/maintenance", icon: Wrench },
   ];
+
+  if (!user) {
+    return (
+      <div className="h-screen w-full flex items-center justify-center bg-background">
+        <MaterialIcon name="sync" className="animate-spin text-4xl text-primary" />
+      </div>
+    );
+  }
 
   return (
     <div className="flex h-screen bg-slate-50 dark:bg-slate-950">
@@ -38,7 +68,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
             <Settings className="mr-3 h-5 w-5" />
             Settings
           </Button>
-          <Button variant="ghost" className="w-full justify-start text-red-600 hover:text-red-700 hover:bg-red-50 dark:hover:bg-red-950/50 mt-1">
+          <Button variant="ghost" onClick={handleLogout} className="w-full justify-start text-red-600 hover:text-red-700 hover:bg-red-50 dark:hover:bg-red-950/50 mt-1">
             <LogOut className="mr-3 h-5 w-5" />
             Logout
           </Button>
@@ -48,10 +78,16 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
       {/* Main Content */}
       <main className="flex-1 flex flex-col overflow-hidden">
         <header className="h-16 bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 flex items-center justify-between px-8">
-          <h2 className="text-lg font-semibold text-slate-800 dark:text-slate-100">Admin Dashboard</h2>
+          <h2 className="text-lg font-semibold text-slate-800 dark:text-slate-100">
+            {user.role === 'admin' ? 'Admin Dashboard' : 'Tenant Portal'}
+          </h2>
           <div className="flex items-center gap-4">
-            <div className="w-8 h-8 bg-blue-100 dark:bg-blue-900 text-blue-600 dark:text-blue-300 rounded-full flex items-center justify-center font-bold">
-              TX
+            <div className="flex flex-col items-end mr-2">
+              <span className="text-sm font-bold leading-none">{user.name}</span>
+              <span className="text-xs text-muted-foreground capitalize">{user.role}</span>
+            </div>
+            <div className="w-10 h-10 bg-primary/10 text-primary rounded-full flex items-center justify-center font-bold">
+              {user.name.substring(0, 2).toUpperCase()}
             </div>
           </div>
         </header>
