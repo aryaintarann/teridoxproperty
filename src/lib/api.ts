@@ -77,6 +77,45 @@ export async function addUnit(unitData: Omit<Unit, 'id'>) {
   return data
 }
 
+export async function updateUnit(id: string, updates: Partial<Unit>) {
+  const { data, error } = await supabase.from('units').update(updates).eq('id', id).select()
+  if (error) {
+    console.error('Error updating unit:', error)
+    throw error
+  }
+  return data
+}
+
+export async function deleteUnit(id: string) {
+  const { error } = await supabase.from('units').delete().eq('id', id)
+  if (error) {
+    console.error('Error deleting unit:', error)
+    throw error
+  }
+  return true
+}
+
+export async function uploadImage(file: File): Promise<string> {
+  const fileExt = file.name.split('.').pop()
+  const fileName = `${Math.random()}.${fileExt}`
+  const filePath = `${fileName}`
+
+  const { error: uploadError } = await supabase.storage
+    .from('property-images')
+    .upload(filePath, file)
+
+  if (uploadError) {
+    console.error('Error uploading image:', uploadError)
+    throw uploadError
+  }
+
+  const { data } = supabase.storage
+    .from('property-images')
+    .getPublicUrl(filePath)
+
+  return data.publicUrl
+}
+
 export async function addTenant(tenantData: any) {
   const { data, error } = await supabase.from('tenants').insert([tenantData]).select()
   if (error) {
