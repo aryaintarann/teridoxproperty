@@ -1,29 +1,110 @@
 "use client";
 
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
-import { getUnits } from "@/lib/api";
+import { getUnits, addUnit } from "@/lib/api";
 import { Button } from "@/components/ui/button";
 import { MaterialIcon } from "@/components/ui/material-icon";
 import { gooeyToast } from "goey-toast";
 import { useState, useEffect } from "react";
 import type { Unit } from "@/types/unit";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger, DialogFooter } from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 
 export default function PropertiesPage() {
   const [availableUnits, setAvailableUnits] = useState<Unit[]>([]);
+  const [isOpen, setIsOpen] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [formData, setFormData] = useState({
+    name: "",
+    property: "",
+    type: "Studio",
+    price: "",
+  });
+
+  const fetchUnits = () => {
+    getUnits().then(setAvailableUnits);
+  };
 
   useEffect(() => {
-    getUnits().then(setAvailableUnits);
+    fetchUnits();
   }, []);
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+    try {
+      // Mock some default fields for the new unit
+      const newUnit = {
+        name: formData.name,
+        property: formData.property,
+        type: formData.type,
+        price: formData.price,
+        location: "Jakarta",
+        address: "New Address",
+        price_numeric: parseInt(formData.price.replace(/[^0-9]/g, '')) || 0,
+        status: "Tersedia",
+        rating: 5.0,
+      };
+      
+      await addUnit(newUnit as any);
+      gooeyToast.success("Property added successfully!");
+      setIsOpen(false);
+      fetchUnits();
+      setFormData({ name: "", property: "", type: "Studio", price: "" });
+    } catch (error) {
+      gooeyToast.error("Failed to add property");
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
   return (
     <div className="space-y-8 animate-in fade-in duration-500">
-      <div className="flex justify-between items-center">
+      <div className="flex justify-between items-center flex-wrap gap-4">
         <div>
           <h1 className="text-3xl font-bold tracking-tight">Properties & Units</h1>
           <p className="text-muted-foreground mt-1">Manage your properties and available units.</p>
         </div>
-        <Button onClick={() => gooeyToast.success("Simulated adding new property")}>
-          <MaterialIcon name="add" className="mr-2" /> Add Property
-        </Button>
+        <Dialog open={isOpen} onOpenChange={setIsOpen}>
+          <DialogTrigger render={<Button />}>
+              <MaterialIcon name="add" className="mr-2" /> Add Property
+          </DialogTrigger>
+          <DialogContent>
+            <DialogHeader>
+              <DialogTitle>Add New Property</DialogTitle>
+            </DialogHeader>
+            <form onSubmit={handleSubmit} className="space-y-4 py-4">
+              <div className="space-y-2">
+                <Label htmlFor="name">Unit Name</Label>
+                <Input id="name" value={formData.name} onChange={e => setFormData({...formData, name: e.target.value})} required placeholder="e.g. A-105" />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="property">Building / Property</Label>
+                <Input id="property" value={formData.property} onChange={e => setFormData({...formData, property: e.target.value})} required placeholder="e.g. Teridox Heights" />
+              </div>
+              <div className="grid grid-cols-2 gap-4">
+                <div className="space-y-2">
+                  <Label htmlFor="type">Type</Label>
+                  <select id="type" className="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50" value={formData.type} onChange={e => setFormData({...formData, type: e.target.value})}>
+                    <option value="Studio">Studio</option>
+                    <option value="Standard">Standard</option>
+                    <option value="Suite">Suite</option>
+                    <option value="Loft">Loft</option>
+                  </select>
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="price">Price</Label>
+                  <Input id="price" value={formData.price} onChange={e => setFormData({...formData, price: e.target.value})} required placeholder="Rp 2.500.000" />
+                </div>
+              </div>
+              <DialogFooter className="pt-4">
+                <Button type="button" variant="outline" onClick={() => setIsOpen(false)}>Cancel</Button>
+                <Button type="submit" disabled={isSubmitting}>Save Property</Button>
+              </DialogFooter>
+            </form>
+          </DialogContent>
+        </Dialog>
       </div>
 
       <Card className="shadow-sm">

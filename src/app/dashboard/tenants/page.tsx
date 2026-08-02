@@ -1,20 +1,60 @@
 "use client";
 
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
-import { getTenants } from "@/lib/api";
+import { getTenants, addTenant } from "@/lib/api";
 import { Button } from "@/components/ui/button";
 import { MaterialIcon } from "@/components/ui/material-icon";
 import { gooeyToast } from "goey-toast";
 import { useState, useEffect } from "react";
 import { Input } from "@/components/ui/input";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger, DialogFooter } from "@/components/ui/dialog";
+import { Label } from "@/components/ui/label";
 
 export default function TenantsPage() {
   const [searchQuery, setSearchQuery] = useState("");
   const [mockTenants, setMockTenants] = useState<any[]>([]);
+  const [isOpen, setIsOpen] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    phone: "",
+    unit: "",
+  });
+
+  const fetchTenants = () => {
+    getTenants().then(setMockTenants);
+  };
 
   useEffect(() => {
-    getTenants().then(setMockTenants);
+    fetchTenants();
   }, []);
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+    try {
+      const newTenant = {
+        id: `T${Math.floor(Math.random() * 10000).toString().padStart(4, '0')}`,
+        name: formData.name,
+        email: formData.email,
+        phone: formData.phone,
+        unit: formData.unit,
+        status: "Active",
+        joined_at: new Date().toISOString().split('T')[0],
+      };
+      
+      await addTenant(newTenant);
+      gooeyToast.success("Tenant added successfully!");
+      setIsOpen(false);
+      fetchTenants();
+      setFormData({ name: "", email: "", phone: "", unit: "" });
+    } catch (error) {
+      gooeyToast.error("Failed to add tenant");
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
 
   const filteredTenants = mockTenants.filter(tenant => 
     tenant.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -28,9 +68,40 @@ export default function TenantsPage() {
           <h1 className="text-3xl font-bold tracking-tight">Tenants</h1>
           <p className="text-muted-foreground mt-1">Manage tenant profiles and communications.</p>
         </div>
-        <Button onClick={() => gooeyToast.success("Simulated adding new tenant")}>
-          <MaterialIcon name="person_add" className="mr-2" /> Add Tenant
-        </Button>
+        <Dialog open={isOpen} onOpenChange={setIsOpen}>
+          <DialogTrigger render={<Button />}>
+              <MaterialIcon name="person_add" className="mr-2" /> Add Tenant
+          </DialogTrigger>
+          <DialogContent>
+            <DialogHeader>
+              <DialogTitle>Register New Tenant</DialogTitle>
+            </DialogHeader>
+            <form onSubmit={handleSubmit} className="space-y-4 py-4">
+              <div className="space-y-2">
+                <Label htmlFor="name">Full Name</Label>
+                <Input id="name" value={formData.name} onChange={e => setFormData({...formData, name: e.target.value})} required placeholder="John Doe" />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="email">Email</Label>
+                <Input id="email" type="email" value={formData.email} onChange={e => setFormData({...formData, email: e.target.value})} required placeholder="john@example.com" />
+              </div>
+              <div className="grid grid-cols-2 gap-4">
+                <div className="space-y-2">
+                  <Label htmlFor="phone">Phone Number</Label>
+                  <Input id="phone" value={formData.phone} onChange={e => setFormData({...formData, phone: e.target.value})} required placeholder="08123456789" />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="unit">Assigned Unit</Label>
+                  <Input id="unit" value={formData.unit} onChange={e => setFormData({...formData, unit: e.target.value})} required placeholder="e.g. A-101" />
+                </div>
+              </div>
+              <DialogFooter className="pt-4">
+                <Button type="button" variant="outline" onClick={() => setIsOpen(false)}>Cancel</Button>
+                <Button type="submit" disabled={isSubmitting}>Register Tenant</Button>
+              </DialogFooter>
+            </form>
+          </DialogContent>
+        </Dialog>
       </div>
 
       <Card className="shadow-sm">

@@ -6,13 +6,36 @@ import { Button } from "@/components/ui/button";
 import { MaterialIcon } from "@/components/ui/material-icon";
 import { gooeyToast } from "goey-toast";
 import { useState, useEffect } from "react";
+import { markInvoicePaid } from "@/lib/api";
 
 export default function BillingPage() {
   const [mockBilling, setMockBilling] = useState<any[]>([]);
 
-  useEffect(() => {
+  const fetchBilling = () => {
     getBilling().then(setMockBilling);
+  };
+
+  useEffect(() => {
+    fetchBilling();
   }, []);
+
+  const handleMarkPaid = async (id: string) => {
+    try {
+      await markInvoicePaid(id);
+      gooeyToast.success("Invoice marked as paid");
+      fetchBilling();
+    } catch (error) {
+      gooeyToast.error("Failed to mark invoice as paid");
+    }
+  };
+
+  const calculateTotal = (status: string) => {
+    return mockBilling
+      .filter(b => status === 'All' || b.status === status)
+      .reduce((sum, b) => sum + (parseInt(b.amount.replace(/[^0-9]/g, '')) || 0), 0);
+  };
+
+  const formatRupiah = (num: number) => `Rp ${num.toLocaleString('id-ID')}`;
   return (
     <div className="space-y-8 animate-in fade-in duration-500">
       <div className="flex justify-between items-center">
@@ -31,7 +54,7 @@ export default function BillingPage() {
             <CardTitle className="text-sm font-medium opacity-90">Total Collected</CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">Rp 7.700.000</div>
+            <div className="text-2xl font-bold">{formatRupiah(calculateTotal('Paid'))}</div>
           </CardContent>
         </Card>
         <Card>
@@ -39,7 +62,7 @@ export default function BillingPage() {
             <CardTitle className="text-sm font-medium text-muted-foreground">Pending</CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold text-amber-600">Rp 3.800.000</div>
+            <div className="text-2xl font-bold text-amber-600">{formatRupiah(calculateTotal('Pending'))}</div>
           </CardContent>
         </Card>
         <Card>
@@ -47,7 +70,7 @@ export default function BillingPage() {
             <CardTitle className="text-sm font-medium text-muted-foreground">Overdue</CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold text-rose-600">Rp 450.000</div>
+            <div className="text-2xl font-bold text-rose-600">{formatRupiah(calculateTotal('Overdue'))}</div>
           </CardContent>
         </Card>
       </div>
@@ -67,7 +90,8 @@ export default function BillingPage() {
                   <th className="px-6 py-3">Type</th>
                   <th className="px-6 py-3">Amount</th>
                   <th className="px-6 py-3">Due Date</th>
-                  <th className="px-6 py-3 rounded-tr-lg">Status</th>
+                  <th className="px-6 py-3">Status</th>
+                  <th className="px-6 py-3 rounded-tr-lg">Actions</th>
                 </tr>
               </thead>
               <tbody>
@@ -89,6 +113,13 @@ export default function BillingPage() {
                       `}>
                         {invoice.status}
                       </span>
+                    </td>
+                    <td className="px-6 py-4">
+                      {invoice.status !== 'Paid' && (
+                        <Button variant="outline" size="sm" onClick={() => handleMarkPaid(invoice.id)}>
+                          <MaterialIcon name="payment" className="mr-1 text-emerald-500" /> Mark Paid
+                        </Button>
+                      )}
                     </td>
                   </tr>
                 ))}

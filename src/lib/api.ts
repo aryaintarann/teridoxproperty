@@ -65,3 +65,49 @@ export async function getMaintenance() {
   }
   return data || []
 }
+
+// Mutations
+
+export async function addUnit(unitData: Omit<Unit, 'id'>) {
+  const { data, error } = await supabase.from('units').insert([unitData]).select()
+  if (error) {
+    console.error('Error adding unit:', error)
+    throw error
+  }
+  return data
+}
+
+export async function addTenant(tenantData: any) {
+  const { data, error } = await supabase.from('tenants').insert([tenantData]).select()
+  if (error) {
+    console.error('Error adding tenant:', error)
+    throw error
+  }
+  return data
+}
+
+export async function markMaintenanceResolved(id: string) {
+  const { data, error } = await supabase
+    .from('maintenance')
+    .update({ status: 'Resolved' })
+    .eq('id', id)
+    .select()
+  if (error) {
+    console.error('Error updating maintenance ticket:', error)
+    throw error
+  }
+  return data
+}
+
+export async function markInvoicePaid(id: string) {
+  const { data, error } = await supabase
+    .from('billing')
+    .update({ status: 'Paid' })
+    .eq('id', id)
+    .select()
+  if (error) {
+    console.error('Error updating invoice status:', error)
+    throw error
+  }
+  return data
+}

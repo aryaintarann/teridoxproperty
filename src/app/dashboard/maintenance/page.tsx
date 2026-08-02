@@ -6,13 +6,28 @@ import { Button } from "@/components/ui/button";
 import { MaterialIcon } from "@/components/ui/material-icon";
 import { gooeyToast } from "goey-toast";
 import { useState, useEffect } from "react";
+import { markMaintenanceResolved } from "@/lib/api";
 
 export default function MaintenancePage() {
   const [mockMaintenance, setMockMaintenance] = useState<any[]>([]);
 
-  useEffect(() => {
+  const fetchMaintenance = () => {
     getMaintenance().then(setMockMaintenance);
+  };
+
+  useEffect(() => {
+    fetchMaintenance();
   }, []);
+
+  const handleResolve = async (id: string) => {
+    try {
+      await markMaintenanceResolved(id);
+      gooeyToast.success("Ticket marked as resolved");
+      fetchMaintenance();
+    } catch (error) {
+      gooeyToast.error("Failed to resolve ticket");
+    }
+  };
   return (
     <div className="space-y-8 animate-in fade-in duration-500">
       <div className="flex justify-between items-center">
@@ -41,7 +56,8 @@ export default function MaintenancePage() {
                   <th className="px-6 py-3">Issue</th>
                   <th className="px-6 py-3">Priority</th>
                   <th className="px-6 py-3">Date</th>
-                  <th className="px-6 py-3 rounded-tr-lg">Status</th>
+                  <th className="px-6 py-3">Status</th>
+                  <th className="px-6 py-3 rounded-tr-lg">Actions</th>
                 </tr>
               </thead>
               <tbody>
@@ -69,6 +85,13 @@ export default function MaintenancePage() {
                       `}>
                         {ticket.status}
                       </span>
+                    </td>
+                    <td className="px-6 py-4">
+                      {ticket.status !== 'Resolved' && (
+                        <Button variant="outline" size="sm" onClick={() => handleResolve(ticket.id)}>
+                          <MaterialIcon name="check_circle" className="mr-1 text-emerald-500" /> Resolve
+                        </Button>
+                      )}
                     </td>
                   </tr>
                 ))}
