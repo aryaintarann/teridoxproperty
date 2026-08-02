@@ -10,9 +10,19 @@ import { markInvoicePaid } from "@/lib/api";
 
 export default function BillingPage() {
   const [mockBilling, setMockBilling] = useState<any[]>([]);
+  const [user, setUser] = useState<any>(null);
 
   const fetchBilling = () => {
-    getBilling().then(setMockBilling);
+    const session = localStorage.getItem("teridox_session");
+    let tenantName = undefined;
+    if (session) {
+      const parsed = JSON.parse(session);
+      setUser(parsed);
+      if (parsed.role === 'tenant') {
+        tenantName = parsed.name;
+      }
+    }
+    getBilling(tenantName).then(setMockBilling);
   };
 
   useEffect(() => {
@@ -43,9 +53,11 @@ export default function BillingPage() {
           <h1 className="text-3xl font-bold tracking-tight">Billing & Invoices</h1>
           <p className="text-muted-foreground mt-1">Manage rent, utilities, and payment status.</p>
         </div>
-        <Button onClick={() => gooeyToast.success("Simulated generating new invoice")}>
-          <MaterialIcon name="receipt" className="mr-2" /> Generate Invoice
-        </Button>
+        {user?.role === 'admin' && (
+          <Button onClick={() => gooeyToast.success("Simulated generating new invoice")}>
+            <MaterialIcon name="receipt" className="mr-2" /> Generate Invoice
+          </Button>
+        )}
       </div>
 
       <div className="grid gap-6 md:grid-cols-3 mb-8">

@@ -9,9 +9,19 @@ import { useState, useEffect } from "react";
 
 export default function ContractsPage() {
   const [mockContracts, setMockContracts] = useState<any[]>([]);
+  const [user, setUser] = useState<any>(null);
 
   useEffect(() => {
-    getContracts().then(setMockContracts);
+    const session = localStorage.getItem("teridox_session");
+    let tenantName = undefined;
+    if (session) {
+      const parsed = JSON.parse(session);
+      setUser(parsed);
+      if (parsed.role === 'tenant') {
+        tenantName = parsed.name;
+      }
+    }
+    getContracts(tenantName).then(setMockContracts);
   }, []);
   return (
     <div className="space-y-8 animate-in fade-in duration-500">
@@ -20,9 +30,11 @@ export default function ContractsPage() {
           <h1 className="text-3xl font-bold tracking-tight">Contracts</h1>
           <p className="text-muted-foreground mt-1">Manage lease agreements and renewals.</p>
         </div>
-        <Button onClick={() => gooeyToast.success("Simulated drafting new contract")}>
-          <MaterialIcon name="description" className="mr-2" /> Draft Contract
-        </Button>
+        {user?.role === 'admin' && (
+          <Button onClick={() => gooeyToast.success("Simulated drafting new contract")}>
+            <MaterialIcon name="description" className="mr-2" /> Draft Contract
+          </Button>
+        )}
       </div>
 
       <Card className="shadow-sm">

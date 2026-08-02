@@ -10,9 +10,19 @@ import { markMaintenanceResolved } from "@/lib/api";
 
 export default function MaintenancePage() {
   const [mockMaintenance, setMockMaintenance] = useState<any[]>([]);
+  const [user, setUser] = useState<any>(null);
 
   const fetchMaintenance = () => {
-    getMaintenance().then(setMockMaintenance);
+    const session = localStorage.getItem("teridox_session");
+    let tenantName = undefined;
+    if (session) {
+      const parsed = JSON.parse(session);
+      setUser(parsed);
+      if (parsed.role === 'tenant') {
+        tenantName = parsed.name;
+      }
+    }
+    getMaintenance(tenantName).then(setMockMaintenance);
   };
 
   useEffect(() => {
@@ -87,7 +97,7 @@ export default function MaintenancePage() {
                       </span>
                     </td>
                     <td className="px-6 py-4">
-                      {ticket.status !== 'Resolved' && (
+                      {ticket.status !== 'Resolved' && user?.role === 'admin' && (
                         <Button variant="outline" size="sm" onClick={() => handleResolve(ticket.id)}>
                           <MaterialIcon name="check_circle" className="mr-1 text-emerald-500" /> Resolve
                         </Button>

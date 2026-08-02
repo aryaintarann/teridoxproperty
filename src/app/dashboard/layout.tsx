@@ -26,13 +26,18 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
   };
 
   const navItems = [
-    { name: "Dashboard", href: "/dashboard", icon: LayoutDashboard },
-    { name: "Properties & Units", href: "/dashboard/properties", icon: Building },
-    { name: "Tenants", href: "/dashboard/tenants", icon: Users },
-    { name: "Contracts", href: "/dashboard/contracts", icon: FileText },
-    { name: "Billing", href: "/dashboard/billing", icon: CreditCard },
-    { name: "Maintenance", href: "/dashboard/maintenance", icon: Wrench },
+    { name: "Dashboard", href: "/dashboard", icon: LayoutDashboard, adminOnly: true },
+    { name: "Properties & Units", href: "/dashboard/properties", icon: Building, adminOnly: true },
+    { name: "Tenants", href: "/dashboard/tenants", icon: Users, adminOnly: true },
+    { name: "Contracts", href: "/dashboard/contracts", icon: FileText, adminOnly: false },
+    { name: "Billing", href: "/dashboard/billing", icon: CreditCard, adminOnly: false },
+    { name: "Maintenance", href: "/dashboard/maintenance", icon: Wrench, adminOnly: false },
   ];
+
+  const filteredNavItems = navItems.filter(item => {
+    if (item.adminOnly && user?.role !== 'admin') return false;
+    return true;
+  });
 
   if (!user) {
     return (
@@ -53,7 +58,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
         </div>
         
         <div className="flex-1 overflow-y-auto py-4 px-3 space-y-1">
-          {navItems.map((item) => (
+          {filteredNavItems.map((item) => (
             <Link key={item.name} href={item.href}>
               <Button variant="ghost" className="w-full justify-start text-slate-600 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-blue-50 dark:hover:bg-blue-900/20">
                 <item.icon className="mr-3 h-5 w-5" />

@@ -39,8 +39,12 @@ export async function getTenants() {
   return data || []
 }
 
-export async function getContracts() {
-  const { data, error } = await supabase.from('contracts').select('*').order('id')
+export async function getContracts(tenantName?: string) {
+  let query = supabase.from('contracts').select('*').order('id')
+  if (tenantName) {
+    query = query.eq('tenant_name', tenantName)
+  }
+  const { data, error } = await query
   if (error) {
     console.error('Error fetching contracts:', error)
     return []
@@ -48,8 +52,12 @@ export async function getContracts() {
   return data || []
 }
 
-export async function getBilling() {
-  const { data, error } = await supabase.from('billing').select('*').order('id')
+export async function getBilling(tenantName?: string) {
+  let query = supabase.from('billing').select('*').order('id')
+  if (tenantName) {
+    query = query.eq('tenant_name', tenantName)
+  }
+  const { data, error } = await query
   if (error) {
     console.error('Error fetching billing:', error)
     return []
@@ -57,8 +65,12 @@ export async function getBilling() {
   return data || []
 }
 
-export async function getMaintenance() {
-  const { data, error } = await supabase.from('maintenance').select('*').order('id')
+export async function getMaintenance(tenantName?: string) {
+  let query = supabase.from('maintenance').select('*').order('id')
+  if (tenantName) {
+    query = query.eq('reported_by', tenantName)
+  }
+  const { data, error } = await query
   if (error) {
     console.error('Error fetching maintenance:', error)
     return []
