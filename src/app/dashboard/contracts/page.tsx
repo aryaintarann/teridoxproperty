@@ -6,9 +6,10 @@ import { Button } from "@/components/ui/button";
 import { MaterialIcon } from "@/components/ui/material-icon";
 import { gooeyToast } from "goey-toast";
 import { useState, useEffect } from "react";
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger, DialogFooter } from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
+import { Select, SelectTrigger, SelectValue, SelectContent, SelectGroup, SelectItem } from "@/components/ui/select";
 import { ContractPreviewModal, printContract } from "@/components/dashboard/ContractPreviewModal";
 
 export default function ContractsPage() {
@@ -112,48 +113,55 @@ export default function ContractsPage() {
         
         {user?.role === 'admin' && (
           <Dialog open={isOpen} onOpenChange={setIsOpen}>
-            <DialogTrigger render={<Button />}>
-              <MaterialIcon name="description" className="mr-2" /> Draft Contract
-            </DialogTrigger>
-            <DialogContent className="sm:max-w-[425px]">
+          <Button onClick={() => setIsOpen(true)}>
+            <MaterialIcon name="description" className="mr-2" /> Draft Contract
+          </Button>
+          <DialogContent className="sm:max-w-[425px]">
               <DialogHeader>
                 <DialogTitle>Draft New Contract</DialogTitle>
               </DialogHeader>
               <form onSubmit={handleSubmit} className="space-y-4 py-4">
                 <div className="space-y-2">
                   <Label htmlFor="tenant">Tenant</Label>
-                  <Input 
-                    id="tenant" 
-                    list="tenant-options"
+                  <Select 
                     value={formData.tenant_name} 
-                    onChange={e => setFormData({...formData, tenant_name: e.target.value})} 
-                    required 
-                    placeholder="Select or type tenant name..." 
-                    autoComplete="off"
-                  />
-                  <datalist id="tenant-options">
-                    {availableTenants.map(t => (
-                      <option key={t.id} value={t.name}>{t.name} ({t.email})</option>
-                    ))}
-                  </datalist>
+                    onValueChange={(val) => setFormData({...formData, tenant_name: val || ''})}
+                    required
+                  >
+                    <SelectTrigger id="tenant" className="w-full h-10">
+                      <SelectValue placeholder="Select a tenant..." />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectGroup>
+                        {availableTenants.map(t => (
+                          <SelectItem key={t.id} value={t.name}>{t.name} ({t.email})</SelectItem>
+                        ))}
+                      </SelectGroup>
+                    </SelectContent>
+                  </Select>
                 </div>
                 
                 <div className="space-y-2">
                   <Label htmlFor="unit">Unit</Label>
-                  <Input 
-                    id="unit" 
-                    list="unit-options"
+                  <Select 
                     value={formData.unit} 
-                    onChange={e => setFormData({...formData, unit: e.target.value})} 
-                    required 
-                    placeholder="Select or type unit name..." 
-                    autoComplete="off"
-                  />
-                  <datalist id="unit-options">
-                    {availableUnits.map(u => (
-                      <option key={u.id} value={u.name}>{u.name} - {u.property}</option>
-                    ))}
-                  </datalist>
+                    onValueChange={(val) => setFormData({...formData, unit: val || ''})}
+                    required
+                  >
+                    <SelectTrigger id="unit" className="w-full h-10">
+                      <SelectValue placeholder="Select an available unit..." />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectGroup>
+                        {availableUnits.filter(u => u.status === 'Tersedia').map(u => (
+                          <SelectItem key={u.id} value={u.name}>{u.name} - {u.property}</SelectItem>
+                        ))}
+                        {availableUnits.filter(u => u.status === 'Tersedia').length === 0 && (
+                          <div className="p-2 text-sm text-muted-foreground text-center">No units available</div>
+                        )}
+                      </SelectGroup>
+                    </SelectContent>
+                  </Select>
                 </div>
                 
                 <div className="grid grid-cols-2 gap-4">

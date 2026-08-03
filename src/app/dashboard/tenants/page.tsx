@@ -9,6 +9,7 @@ import { useState, useEffect } from "react";
 import { Input } from "@/components/ui/input";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger, DialogFooter } from "@/components/ui/dialog";
 import { Label } from "@/components/ui/label";
+import { Select, SelectTrigger, SelectValue, SelectContent, SelectGroup, SelectItem } from "@/components/ui/select";
 import type { Unit } from "@/types/unit";
 
 export default function TenantsPage() {
@@ -160,17 +161,15 @@ export default function TenantsPage() {
 
   return (
     <div className="space-y-8 animate-in fade-in duration-500">
-      <div className="flex justify-between items-center flex-wrap gap-4">
+      <div className="flex justify-between items-center">
         <div>
-          <h1 className="text-3xl font-bold tracking-tight">Tenants</h1>
-          <p className="text-muted-foreground mt-1">Manage tenant profiles and communications.</p>
+          <h1 className="text-3xl font-bold tracking-tight">Tenants Directory</h1>
+          <p className="text-muted-foreground mt-1">Manage tenant information, view details, and track assignments.</p>
         </div>
-        
-        {/* Main Add / Edit Dialog */}
         <Dialog open={isOpen} onOpenChange={setIsOpen}>
-          <DialogTrigger render={<Button onClick={openAddModal} />}>
+          <Button onClick={openAddModal}>
               <MaterialIcon name="person_add" className="mr-2" /> Add Tenant
-          </DialogTrigger>
+          </Button>
           <DialogContent className="max-h-[90vh] overflow-y-auto">
             <DialogHeader>
               <DialogTitle>{isEditMode ? "Edit Tenant Profile" : "Register New Tenant"}</DialogTitle>
@@ -190,24 +189,28 @@ export default function TenantsPage() {
               </div>
               <div className="space-y-2">
                 <Label htmlFor="unit">Assigned Unit</Label>
-                <Input 
-                  id="unit" 
-                  list="unit-options" 
+                <Select 
                   value={formData.unit} 
-                  onChange={e => setFormData({...formData, unit: e.target.value})} 
-                  required 
-                  placeholder="Type or select a unit..." 
-                  autoComplete="off"
-                />
-                <datalist id="unit-options">
-                  {availableUnits.map((u) => (
-                    <option key={u.id} value={u.name}>
-                      {u.name} - {u.type} ({u.property})
-                    </option>
-                  ))}
-                </datalist>
+                  onValueChange={(val) => setFormData({...formData, unit: val || ''})}
+                  required
+                >
+                  <SelectTrigger id="unit" className="w-full h-10">
+                    <SelectValue placeholder="Select an available unit..." />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectGroup>
+                      {availableUnits.filter(u => u.status === 'Tersedia').map((u) => (
+                        <SelectItem key={u.id} value={u.name}>
+                          {u.name} - {u.type} ({u.property})
+                        </SelectItem>
+                      ))}
+                      {availableUnits.filter(u => u.status === 'Tersedia').length === 0 && (
+                        <div className="p-2 text-sm text-muted-foreground text-center">No units available</div>
+                      )}
+                    </SelectGroup>
+                  </SelectContent>
+                </Select>
               </div>
-              
               {isEditMode && (
                 <div className="space-y-2">
                   <Label htmlFor="status">Status</Label>
