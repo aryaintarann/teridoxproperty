@@ -89,7 +89,7 @@ export async function addUnit(unitData: Omit<Unit, 'id'>) {
   return data
 }
 
-export async function updateUnit(id: string, updates: Partial<Unit>) {
+export async function updateUnit(id: number, updates: Partial<Unit>) {
   const { data, error } = await supabase.from('units').update(updates).eq('id', id).select()
   if (error) {
     console.error('Error updating unit:', error)
@@ -98,7 +98,7 @@ export async function updateUnit(id: string, updates: Partial<Unit>) {
   return data
 }
 
-export async function deleteUnit(id: string) {
+export async function deleteUnit(id: number) {
   const { error } = await supabase.from('units').delete().eq('id', id)
   if (error) {
     console.error('Error deleting unit:', error)
@@ -136,6 +136,24 @@ export async function addTenant(tenantData: any) {
   }
   return data
 }
+export async function updateTenant(id: string, updates: any) {
+  const { data, error } = await supabase.from('tenants').update(updates).eq('id', id).select()
+  if (error) {
+    console.error('Error updating tenant:', error)
+    throw error
+  }
+  return data
+}
+
+export async function deleteTenant(id: string) {
+  const { error } = await supabase.from('tenants').delete().eq('id', id)
+  if (error) {
+    console.error('Error deleting tenant:', error)
+    throw error
+  }
+  return true
+}
+
 
 export async function markMaintenanceResolved(id: string) {
   const { data, error } = await supabase

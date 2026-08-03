@@ -120,8 +120,8 @@ export default function UnitDetailPage({ params }: { params: Promise<{ id: strin
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               {[
                 { label: "Luas", value: unit.sqft },
-                { label: "Tipe Tempat Tidur", value: unit.bedType },
-                { label: "Lantai", value: unit.floorLevel },
+                { label: "Tipe Tempat Tidur", value: unit.bed_type },
+                { label: "Lantai", value: unit.floor_level },
               ].map((s) => (
                 <div key={s.label} className="border-l-2 border-td-primary-container pl-6">
                   <p className="text-td-on-surface-variant text-[10px] font-semibold uppercase tracking-wider">{s.label}</p>

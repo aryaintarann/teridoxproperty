@@ -47,14 +47,14 @@ export default function PropertiesPage() {
   
   // Form/Edit state
   const [isEditMode, setIsEditMode] = useState(false);
-  const [selectedUnitId, setSelectedUnitId] = useState<string | null>(null);
+  const [selectedUnitId, setSelectedUnitId] = useState<number | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [imageFiles, setImageFiles] = useState<File[]>([]);
   const [selectedAmenities, setSelectedAmenities] = useState<string[]>([]);
   const [formData, setFormData] = useState(DEFAULT_FORM);
 
   // Target states
-  const [unitToDelete, setUnitToDelete] = useState<string | null>(null);
+  const [unitToDelete, setUnitToDelete] = useState<number | null>(null);
   const [unitToView, setUnitToView] = useState<Unit | null>(null);
 
   const fetchUnits = () => {
@@ -109,7 +109,7 @@ export default function PropertiesPage() {
     setIsFormOpen(true);
   };
 
-  const openDeleteModal = (id: string) => {
+  const openDeleteModal = (id: number) => {
     setUnitToDelete(id);
     setIsDeleteDialogOpen(true);
   };

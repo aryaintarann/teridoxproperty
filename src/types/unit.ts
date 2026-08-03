@@ -17,14 +17,14 @@ export interface Unit {
   location: string;
   address: string;
   price: string;
-  priceNumeric: number;
+  price_numeric: number;
   type: string;
   status: "Tersedia" | "Terisi" | "Maintenance";
   rating: number;
   amenities: UnitAmenity[];
   sqft: string;
-  bedType: string;
-  floorLevel: string;
+  bed_type: string;
+  floor_level: string;
   description: string;
   images: string[];
   agent?: UnitAgent;
