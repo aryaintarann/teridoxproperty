@@ -154,6 +154,15 @@ export async function deleteTenant(id: string) {
   return true
 }
 
+export async function addContract(contractData: any) {
+  const { data, error } = await supabase.from('contracts').insert([contractData]).select()
+  if (error) {
+    console.error('Error adding contract:', error)
+    throw error
+  }
+  return data
+}
+
 
 export async function markMaintenanceResolved(id: string) {
   const { data, error } = await supabase
