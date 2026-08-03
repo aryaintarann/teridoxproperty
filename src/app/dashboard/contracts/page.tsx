@@ -62,6 +62,16 @@ export default function ContractsPage() {
     fetchData(tenantName);
   }, []);
 
+  const handleTenantChange = (val: string | null) => {
+    const selectedTenant = availableTenants.find(t => t.name === val);
+    setFormData({
+      ...formData, 
+      tenant_name: val || '',
+      // If the tenant already has a unit assigned in their profile, auto-select it
+      unit: selectedTenant?.unit || formData.unit
+    });
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
@@ -172,7 +182,7 @@ export default function ContractsPage() {
                   <Label htmlFor="tenant">Tenant</Label>
                   <Select 
                     value={formData.tenant_name} 
-                    onValueChange={(val) => setFormData({...formData, tenant_name: val || ''})}
+                    onValueChange={handleTenantChange}
                     required
                   >
                     <SelectTrigger id="tenant" className="w-full h-10">
@@ -200,10 +210,10 @@ export default function ContractsPage() {
                     </SelectTrigger>
                     <SelectContent>
                       <SelectGroup>
-                        {availableUnits.filter(u => u.status === 'Tersedia').map(u => (
+                        {availableUnits.filter(u => u.status === 'Tersedia' || u.name === formData.unit).map(u => (
                           <SelectItem key={u.id} value={u.name}>{u.name} - {u.property}</SelectItem>
                         ))}
-                        {availableUnits.filter(u => u.status === 'Tersedia').length === 0 && (
+                        {availableUnits.filter(u => u.status === 'Tersedia' || u.name === formData.unit).length === 0 && (
                           <div className="p-2 text-sm text-muted-foreground text-center">No units available</div>
                         )}
                       </SelectGroup>

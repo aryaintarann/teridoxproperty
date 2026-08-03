@@ -93,6 +93,7 @@ export default function MaintenancePage() {
     
     try {
       const payload = {
+        id: `M-${Math.floor(Math.random() * 10000).toString().padStart(4, '0')}`,
         unit: formData.unit,
         issue: formData.issue,
         priority: formData.priority,
