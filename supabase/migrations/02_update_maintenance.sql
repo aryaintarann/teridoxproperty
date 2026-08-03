@@ -1,0 +1,2 @@
+ALTER TABLE maintenance ADD COLUMN IF NOT EXISTS priority TEXT DEFAULT 'Medium';
+ALTER TABLE maintenance ADD COLUMN IF NOT EXISTS photo_url TEXT;

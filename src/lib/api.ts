@@ -39,6 +39,15 @@ export async function getTenants() {
   return data || []
 }
 
+export async function getTenantByName(name: string) {
+  const { data, error } = await supabase.from('tenants').select('*').eq('name', name).single()
+  if (error) {
+    console.error('Error fetching tenant:', error)
+    return null
+  }
+  return data
+}
+
 export async function getContracts(tenantName?: string) {
   let query = supabase.from('contracts').select('*').order('id')
   if (tenantName) {
@@ -93,6 +102,15 @@ export async function updateUnit(id: number, updates: Partial<Unit>) {
   const { data, error } = await supabase.from('units').update(updates).eq('id', id).select()
   if (error) {
     console.error('Error updating unit:', error)
+    throw error
+  }
+  return data
+}
+
+export async function updateUnitStatusByName(name: string, status: string) {
+  const { data, error } = await supabase.from('units').update({ status }).eq('name', name).select()
+  if (error) {
+    console.error('Error updating unit status by name:', error)
     throw error
   }
   return data
@@ -163,6 +181,37 @@ export async function addContract(contractData: any) {
   return data
 }
 
+
+export async function addMaintenance(data: any) {
+  const { data: result, error } = await supabase.from('maintenance').insert([data]).select()
+  if (error) {
+    console.error('Error adding maintenance ticket:', error)
+    throw error
+  }
+  return result
+}
+
+export async function updateMaintenanceStatus(id: string, status: string) {
+  const { data, error } = await supabase
+    .from('maintenance')
+    .update({ status })
+    .eq('id', id)
+    .select()
+  if (error) {
+    console.error('Error updating maintenance status:', error)
+    throw error
+  }
+  return data
+}
+
+export async function deleteMaintenance(id: string) {
+  const { error } = await supabase.from('maintenance').delete().eq('id', id)
+  if (error) {
+    console.error('Error deleting maintenance ticket:', error)
+    throw error
+  }
+  return true
+}
 
 export async function markMaintenanceResolved(id: string) {
   const { data, error } = await supabase

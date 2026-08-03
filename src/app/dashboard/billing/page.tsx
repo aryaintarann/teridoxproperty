@@ -179,12 +179,15 @@ export default function BillingPage() {
                     value={formData.tenant_name} 
                     onChange={e => {
                       const selectedTenant = e.target.value;
-                      // Autofill unit if we find a matching contract
+                      // Autofill unit if we find a matching contract, else fallback to tenant base record
                       const matchingContract = activeContracts.find(c => c.tenant_name === selectedTenant && c.status === "Active");
+                      const matchedTenant = availableTenants.find(t => t.name === selectedTenant);
+                      const autofillUnit = matchingContract ? matchingContract.unit : (matchedTenant && matchedTenant.unit ? matchedTenant.unit : formData.unit);
+                      
                       setFormData({
                         ...formData, 
                         tenant_name: selectedTenant,
-                        unit: matchingContract ? matchingContract.unit : formData.unit
+                        unit: autofillUnit
                       });
                     }} 
                     required placeholder="Select tenant..." autoComplete="off"

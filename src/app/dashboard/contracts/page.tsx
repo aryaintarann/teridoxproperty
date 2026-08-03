@@ -1,7 +1,7 @@
 "use client";
 
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
-import { getContracts, getTenants, getUnits, addContract } from "@/lib/api";
+import { getContracts, getTenants, getUnits, addContract, updateUnitStatusByName } from "@/lib/api";
 import { Button } from "@/components/ui/button";
 import { MaterialIcon } from "@/components/ui/material-icon";
 import { gooeyToast } from "goey-toast";
@@ -83,6 +83,12 @@ export default function ContractsPage() {
       }
 
       await addContract(newContract);
+      
+      // Mark unit as occupied
+      if (formData.unit && formData.status === "Active") {
+        await updateUnitStatusByName(formData.unit, "Terisi");
+      }
+      
       gooeyToast.success("Contract drafted successfully!");
       setIsOpen(false);
       setFormData({ tenant_name: "", unit: "", start_date: "", end_date: "", status: "Active" });

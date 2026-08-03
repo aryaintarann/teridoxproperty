@@ -1,7 +1,7 @@
 "use client";
 
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
-import { getTenants, addTenant, getUnits, updateTenant, deleteTenant, getBilling, getMaintenance } from "@/lib/api";
+import { getTenants, addTenant, getUnits, updateTenant, deleteTenant, getBilling, getMaintenance, updateUnitStatusByName } from "@/lib/api";
 import { Button } from "@/components/ui/button";
 import { MaterialIcon } from "@/components/ui/material-icon";
 import { gooeyToast } from "goey-toast";
@@ -103,7 +103,7 @@ export default function TenantsPage() {
     setIsSubmitting(true);
     try {
       if (isEditMode && selectedTenant) {
-        // Edit Tenant
+        // Update Tenant
         const updates = {
           name: formData.name,
           email: formData.email,
@@ -112,6 +112,12 @@ export default function TenantsPage() {
           status: formData.status
         };
         await updateTenant(selectedTenant.id, updates);
+        
+        // Mark unit as occupied
+        if (formData.unit && formData.status === "Active") {
+          await updateUnitStatusByName(formData.unit, "Terisi");
+        }
+        
         gooeyToast.success("Tenant updated successfully!");
       } else {
         // Add Tenant
@@ -127,6 +133,12 @@ export default function TenantsPage() {
           joined_at: new Date().toISOString().split('T')[0],
         };
         await addTenant(newTenant);
+        
+        // Mark unit as occupied
+        if (formData.unit && formData.status === "Active") {
+          await updateUnitStatusByName(formData.unit, "Terisi");
+        }
+        
         gooeyToast.success("Tenant added successfully!");
       }
       setIsOpen(false);
@@ -146,8 +158,9 @@ export default function TenantsPage() {
       gooeyToast.success("Tenant deleted successfully!");
       setIsDeleteDialogOpen(false);
       fetchData();
-    } catch (error) {
-      gooeyToast.error("Failed to delete tenant");
+    } catch (error: any) {
+      console.error(error);
+      gooeyToast.error(`Failed to delete tenant: ${error.message || 'Unknown error'}`);
     } finally {
       setIsSubmitting(false);
     }
