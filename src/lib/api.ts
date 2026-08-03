@@ -181,6 +181,15 @@ export async function addContract(contractData: any) {
   return data
 }
 
+export async function deleteContract(id: string) {
+  const { error } = await supabase.from('contracts').delete().eq('id', id)
+  if (error) {
+    console.error('Error deleting contract:', error)
+    throw error
+  }
+  return true
+}
+
 
 export async function addMaintenance(data: any) {
   const { data: result, error } = await supabase.from('maintenance').insert([data]).select()

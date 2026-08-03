@@ -1,7 +1,7 @@
 "use client";
 
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
-import { getContracts, getTenants, getUnits, addContract, updateUnitStatusByName } from "@/lib/api";
+import { getContracts, getTenants, getUnits, addContract, deleteContract, updateUnitStatusByName } from "@/lib/api";
 import { Button } from "@/components/ui/button";
 import { MaterialIcon } from "@/components/ui/material-icon";
 import { gooeyToast } from "goey-toast";
@@ -24,6 +24,7 @@ export default function ContractsPage() {
   const [isOpen, setIsOpen] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [contractToView, setContractToView] = useState<any>(null);
+  const [contractToDelete, setContractToDelete] = useState<any>(null);
   const [formData, setFormData] = useState({
     tenant_name: "",
     unit: "",
@@ -103,6 +104,27 @@ export default function ContractsPage() {
     }
   };
 
+  const handleDelete = async () => {
+    if (!contractToDelete) return;
+    setIsSubmitting(true);
+    try {
+      await deleteContract(contractToDelete.id);
+      
+      // Free up the unit if it was deleted
+      if (contractToDelete.unit && contractToDelete.status === "Active") {
+        await updateUnitStatusByName(contractToDelete.unit, "Tersedia");
+      }
+      
+      gooeyToast.success("Contract deleted successfully!");
+      setContractToDelete(null);
+      fetchData();
+    } catch (error) {
+      gooeyToast.error("Failed to delete contract");
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
   return (
     <div className="space-y-8 animate-in fade-in duration-500">
       <ContractPreviewModal 
@@ -110,6 +132,25 @@ export default function ContractsPage() {
         isOpen={!!contractToView} 
         onClose={() => setContractToView(null)} 
       />
+      
+      {/* Delete Confirmation Dialog */}
+      <Dialog open={!!contractToDelete} onOpenChange={(open) => !open && setContractToDelete(null)}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Delete Contract</DialogTitle>
+          </DialogHeader>
+          <div className="py-4">
+            <p>Are you sure you want to delete contract <strong>{contractToDelete?.id}</strong> for {contractToDelete?.tenant_name}?</p>
+            <p className="text-sm text-muted-foreground mt-2">This action cannot be undone and will remove the contract record permanently.</p>
+          </div>
+          <DialogFooter>
+            <Button variant="outline" onClick={() => setContractToDelete(null)}>Cancel</Button>
+            <Button variant="destructive" onClick={handleDelete} disabled={isSubmitting}>
+              {isSubmitting ? "Deleting..." : "Delete Contract"}
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
       
       <div className="flex justify-between items-center">
         <div>
@@ -265,6 +306,11 @@ export default function ContractsPage() {
                         <Button variant="ghost" size="icon-sm" onClick={() => printContract(contract)}>
                           <MaterialIcon name="download" className="text-muted-foreground hover:text-td-primary transition-colors" />
                         </Button>
+                        {user?.role === 'admin' && (
+                          <Button variant="ghost" size="icon-sm" onClick={() => setContractToDelete(contract)}>
+                            <MaterialIcon name="delete" className="text-muted-foreground hover:text-rose-600 transition-colors" />
+                          </Button>
+                        )}
                       </div>
                     </td>
                   </tr>

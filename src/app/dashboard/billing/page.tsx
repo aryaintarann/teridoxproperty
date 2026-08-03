@@ -147,6 +147,21 @@ export default function BillingPage() {
     }
   };
 
+  const handleDeleteInvoice = async () => {
+    if (!invoiceToDelete) return;
+    setIsSubmitting(true);
+    try {
+      await deleteBilling(invoiceToDelete.id);
+      gooeyToast.success("Invoice deleted successfully!");
+      setInvoiceToDelete(null);
+      fetchBilling();
+    } catch (error) {
+      gooeyToast.error("Failed to delete invoice");
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
   return (
     <div className="space-y-8 animate-in fade-in duration-500">
       
@@ -155,6 +170,25 @@ export default function BillingPage() {
         isOpen={!!invoiceToView} 
         onClose={() => setInvoiceToView(null)} 
       />
+      
+      {/* Delete Confirmation Dialog */}
+      <Dialog open={!!invoiceToDelete} onOpenChange={(open) => !open && setInvoiceToDelete(null)}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Delete Invoice</DialogTitle>
+          </DialogHeader>
+          <div className="py-4">
+            <p>Are you sure you want to delete invoice <strong>{invoiceToDelete?.id}</strong> for {invoiceToDelete?.tenant_name}?</p>
+            <p className="text-sm text-muted-foreground mt-2">This action cannot be undone and will remove the billing record permanently.</p>
+          </div>
+          <DialogFooter>
+            <Button variant="outline" onClick={() => setInvoiceToDelete(null)}>Cancel</Button>
+            <Button variant="destructive" onClick={handleDeleteInvoice} disabled={isSubmitting}>
+              {isSubmitting ? "Deleting..." : "Delete Invoice"}
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
 
       <div className="flex justify-between items-center">
         <div>

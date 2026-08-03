@@ -25,6 +25,7 @@ const DEFAULT_FORM = {
   name: "",
   property: "",
   type: "Studio",
+  status: "Tersedia",
   price: "",
   location: "",
   address: "",
@@ -93,6 +94,7 @@ export default function PropertiesPage() {
       name: unit.name,
       property: unit.property,
       type: unit.type,
+      status: unit.status || "Tersedia",
       price: unit.price,
       location: unit.location || "",
       address: unit.address || "",
@@ -163,6 +165,7 @@ export default function PropertiesPage() {
         name: formData.name,
         property: formData.property,
         type: formData.type as any,
+        status: formData.status as any,
         price: formData.price,
         location: formData.location || "Jakarta",
         address: formData.address || "Jakarta",
@@ -291,6 +294,14 @@ export default function PropertiesPage() {
                     <option value="Standard">Standard</option>
                     <option value="Suite">Suite</option>
                     <option value="Loft">Loft</option>
+                  </select>
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="status">Status</Label>
+                  <select id="status" className="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring" value={formData.status} onChange={e => setFormData({...formData, status: e.target.value})}>
+                    <option value="Tersedia">Tersedia</option>
+                    <option value="Terisi">Terisi</option>
+                    <option value="Maintenance">Maintenance</option>
                   </select>
                 </div>
                 <div className="space-y-2">
