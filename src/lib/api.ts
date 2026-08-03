@@ -190,6 +190,37 @@ export async function markInvoicePaid(id: string) {
   return data
 }
 
+export async function addBilling(billingData: any) {
+  const { data, error } = await supabase.from('billing').insert([billingData]).select()
+  if (error) {
+    console.error('Error adding billing:', error)
+    throw error
+  }
+  return data
+}
+
+export async function deleteBilling(id: string) {
+  const { error } = await supabase.from('billing').delete().eq('id', id)
+  if (error) {
+    console.error('Error deleting billing:', error)
+    throw error
+  }
+  return true
+}
+
+export async function submitPaymentProof(id: string, proofUrl: string) {
+  const { data, error } = await supabase
+    .from('billing')
+    .update({ status: 'Pending Verification', proof_of_payment: proofUrl })
+    .eq('id', id)
+    .select()
+  if (error) {
+    console.error('Error submitting payment proof:', error)
+    throw error
+  }
+  return data
+}
+
 export async function authenticateUser(email: string, password: string) {
   // Hardcoded Admin
   if (email === 'admin@teridox.com' && password === 'admin123') {
