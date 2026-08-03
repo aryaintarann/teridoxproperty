@@ -10,7 +10,6 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Select, SelectTrigger, SelectValue, SelectContent, SelectGroup, SelectItem } from "@/components/ui/select";
-import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from "@/components/ui/alert-dialog";
 
 export default function MaintenancePage() {
   const [mockMaintenance, setMockMaintenance] = useState<any[]>([]);
@@ -20,6 +19,9 @@ export default function MaintenancePage() {
   const [isPhotoModalOpen, setIsPhotoModalOpen] = useState(false);
   const [photoToView, setPhotoToView] = useState<string | null>(null);
   
+  const [isViewModalOpen, setIsViewModalOpen] = useState(false);
+  const [ticketToView, setTicketToView] = useState<any>(null);
+
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
   const [ticketToDelete, setTicketToDelete] = useState<any>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -267,6 +269,13 @@ export default function MaintenancePage() {
                       </span>
                     </td>
                     <td className="px-6 py-4 space-x-2">
+                      <Button variant="ghost" size="icon-sm" onClick={() => {
+                        setTicketToView(ticket);
+                        setIsViewModalOpen(true);
+                      }} title="View Ticket Details">
+                        <MaterialIcon name="visibility" className="text-muted-foreground hover:text-primary" />
+                      </Button>
+                      
                       {ticket.photo_url && (
                         <Button variant="outline" size="sm" onClick={() => {
                           setPhotoToView(ticket.photo_url);
@@ -311,6 +320,44 @@ export default function MaintenancePage() {
           </div>
         </CardContent>
       </Card>
+
+      {/* View Ticket Details Modal */}
+      <Dialog open={isViewModalOpen} onOpenChange={setIsViewModalOpen}>
+        <DialogContent className="sm:max-w-[425px]">
+          <DialogHeader>
+            <DialogTitle>Ticket Details: #{ticketToView?.id}</DialogTitle>
+          </DialogHeader>
+          {ticketToView && (
+            <div className="space-y-4 py-4">
+              <div className="grid grid-cols-2 gap-4 text-sm">
+                <div>
+                  <p className="text-muted-foreground">Reported By</p>
+                  <p className="font-semibold">{ticketToView.reported_by}</p>
+                </div>
+                <div>
+                  <p className="text-muted-foreground">Unit</p>
+                  <p className="font-semibold">{ticketToView.unit}</p>
+                </div>
+                <div>
+                  <p className="text-muted-foreground">Date</p>
+                  <p className="font-semibold">{ticketToView.date}</p>
+                </div>
+                <div>
+                  <p className="text-muted-foreground">Priority & Status</p>
+                  <p className="font-semibold">{ticketToView.priority} - {ticketToView.status}</p>
+                </div>
+              </div>
+              <div>
+                <p className="text-muted-foreground text-sm">Issue Description</p>
+                <p className="mt-1 text-sm bg-muted/30 p-3 rounded-md">{ticketToView.issue}</p>
+              </div>
+            </div>
+          )}
+          <DialogFooter>
+            <Button variant="outline" onClick={() => setIsViewModalOpen(false)}>Close</Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
 
       {/* Delete Confirmation Dialog */}
       <Dialog open={isDeleteDialogOpen} onOpenChange={setIsDeleteDialogOpen}>
