@@ -42,7 +42,7 @@ export default function UnitDetailPage({ params }: { params: Promise<{ id: strin
     <div className="max-w-7xl mx-auto px-4 md:px-12 py-6 lg:py-10 overflow-hidden">
       {/* Image Gallery (Bento) */}
       <ScrollReveal direction="down">
-      <phantom-ui loading={isGalleryLoading} animation="wave" reveal={0.4}>
+      <div className={isGalleryLoading ? "animate-pulse" : ""}>
         <section className="relative w-full h-[40vh] md:h-[60vh] md:grid md:grid-cols-4 md:grid-rows-2 gap-2 overflow-hidden rounded-3xl">
           <div className="relative col-span-2 row-span-2 w-full h-full group overflow-hidden">
             <Image src={(unit.images && unit.images[0]) || "https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?q=80&w=800&auto=format&fit=crop"} alt={unit.name} fill sizes="(max-width: 768px) 100vw, 50vw" className="object-cover transition-transform duration-700 group-hover:scale-105" priority />
@@ -64,7 +64,7 @@ export default function UnitDetailPage({ params }: { params: Promise<{ id: strin
             </div>
           )}
         </section>
-      </phantom-ui>
+      </div>
       </ScrollReveal>
 
       {/* Main Layout */}

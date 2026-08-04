@@ -118,13 +118,13 @@ export default function ListingPage() {
               </select>
             </div>
           </div>
-          <phantom-ui loading={isGridLoading} animation="pulse" reveal={0.3}>
+          <div className={isGridLoading ? "animate-pulse" : ""}>
             <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
-              {availableUnits.map((unit) => (
+              {availableUnits.map((unit, i) => (
                 <div key={unit.id} className="relative bg-white rounded-xl border border-td-outline-variant overflow-hidden group hover:shadow-lg transition-all duration-300 flex flex-col">
                   <Link href={`/listing/${unit.id}`} className="absolute inset-0 z-0" aria-label={`Lihat detail ${unit.name}`} />
                   <div className="relative h-56 overflow-hidden pointer-events-none">
-                    <Image src={(unit.images && unit.images[0]) || "https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?q=80&w=800&auto=format&fit=crop"} alt={unit.name} fill sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw" className="object-cover group-hover:scale-105 transition-transform duration-500" />
+                    <Image src={(unit.images && unit.images[0]) || "https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?q=80&w=800&auto=format&fit=crop"} alt={unit.name} fill sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw" className="object-cover group-hover:scale-105 transition-transform duration-500" priority={i === 0} />
                     <div className={`absolute top-4 left-4 px-3 py-1 rounded-full text-xs font-semibold tracking-wider ${
                       unit.status === "Tersedia" ? "bg-td-tertiary text-td-on-tertiary" : "bg-td-secondary text-td-on-secondary"
                     }`}>
@@ -168,7 +168,7 @@ export default function ListingPage() {
                 </div>
               ))}
             </div>
-          </phantom-ui>
+          </div>
 
           {/* Pagination */}
           <div className="mt-16 flex justify-center items-center gap-2">

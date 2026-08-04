@@ -130,7 +130,7 @@ export default function HomePage() {
           </Link>
         </div>
 
-        <phantom-ui loading={isGridLoading} animation="wave" reveal={0.5}>
+        <div className={isGridLoading ? "animate-pulse" : ""}>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {featuredUnits.map((unit, i) => (
               <motion.div
@@ -213,7 +213,7 @@ export default function HomePage() {
               </motion.div>
             ))}
           </div>
-        </phantom-ui>
+        </div>
         </ScrollReveal>
       </section>
 
